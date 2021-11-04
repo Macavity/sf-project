@@ -19,11 +19,14 @@ class Stage
     #[Assert\NotBlank]
     public int $level;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'stages')]
     public Zone $zone;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'stages')]
     public Boss $boss;
+
+    #[ORM\OneToMany(mappedBy: 'stage', targetEntity: PartySetup::class)]
+    public iterable $partySetups;
 
     public function __constructor()
     {

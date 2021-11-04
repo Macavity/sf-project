@@ -21,7 +21,7 @@ class PartySetup
     #[ORM\ManyToOne]
     public Zone $zone;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'partySetups')]
     public Boss $boss;
 
     #[ORM\Embedded(class: EmbedRotation::class)]

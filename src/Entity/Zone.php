@@ -30,13 +30,13 @@ class Zone
     #[ORM\Column]
     public int $scoreStart = 0;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'zones')]
     public ?Continent $continent = null;
 
     #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'zone')]
     public iterable $stages;
 
-    #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'zone')]
+    #[ORM\OneToMany(targetEntity: PartySetup::class, mappedBy: 'zone')]
     public iterable $partySetups;
 
     public function __construct()
