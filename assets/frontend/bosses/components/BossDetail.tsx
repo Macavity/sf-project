@@ -85,9 +85,9 @@ export class BossDetail extends Component<LocalProps, LocalState> {
               {this.getEmptyRow()}
               {setups.map((setup, i) => {
                 return (
-                  <PartySetupRow key={setup.zone.id + '-' + i}
+                  <PartySetupRow key={setup.zoneId + '-' + i}
                                  stageLevel={setup.stage}
-                                 zone={setup.zone}
+                                 zoneId={setup.zoneId}
                                  bossName={boss.name}
                                  bossId={boss.id}
                                  primaryCounterElement={boss.primaryCounter}

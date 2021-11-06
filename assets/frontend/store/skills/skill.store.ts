@@ -4,7 +4,7 @@ import { Skill } from '../../models/Skill';
 export interface SkillState extends EntityState<Skill, number> {
 }
 
-@StoreConfig({ name: 'skill', idKey: 'key' })
+@StoreConfig({ name: 'skill' })
 export class SkillStore extends EntityStore<SkillState> {
 }
 

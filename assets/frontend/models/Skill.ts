@@ -17,12 +17,12 @@ export interface ISkillDTO {
   id: number;
   name: string;
   shortName: string;
-  job: IJobDTO;
+  job: string;
 }
 
 export class Skill {
   constructor(
-    public key: SkillType,
+    public id: number,
     public classType: ClassType,
     public shortName: string,
     public icon: string | null = null,

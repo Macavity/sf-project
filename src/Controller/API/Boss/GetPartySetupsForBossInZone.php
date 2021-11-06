@@ -29,7 +29,7 @@ class GetPartySetupsForBossInZone extends AbstractController
         LoggerInterface      $logger,
     ) {
         $requestedLevel = (int) $request->get('level', null);
-        $requestedZone = (int) $request->get('zoneId', null);
+        $requestedZone = (int) $request->get('zone', null);
 
         if (!$requestedLevel || !$requestedZone) {
             throw new BadRequestException();
@@ -43,7 +43,7 @@ class GetPartySetupsForBossInZone extends AbstractController
 
         $exactMatch = $partySetupRepository
             ->findBy([
-                         'zoneId' => $requestedZone,
+                         'zone' => $requestedZone,
                          'stageLevel' => $requestedLevel,
                      ]);
 

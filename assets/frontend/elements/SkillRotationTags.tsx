@@ -2,6 +2,7 @@ import { ClassType } from '../enums/ClassType';
 import { Component } from 'react';
 import { SkillReference } from '../models/skill-reference';
 import { skillService } from '../store/skills/skill.service';
+import { skillQuery } from '../store/skills/skill.query';
 
 type Props = {
   classType: ClassType;
@@ -16,6 +17,7 @@ type State = {
   skill2Name: string;
   skill3Name: string;
   skill4Name: string;
+  skillIds: number[];
 };
 
 export class SkillRotationTags extends Component<Props, State> {
@@ -44,15 +46,6 @@ export class SkillRotationTags extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {
-      skill1Name: '',
-      skill2Name: '',
-      skill3Name: '',
-      skill4Name: '',
-    };
-  }
-
-  componentDidMount() {
     const skills = [
       this.props.skill1.id,
       this.props.skill2.id,
@@ -60,17 +53,27 @@ export class SkillRotationTags extends Component<Props, State> {
       this.props.skill4.id,
     ];
 
-    skillService.findSkillsByIds(skills)
-      .subscribe(skills => {
-        if (skills) {
+    this.state = {
+      skill1Name: '',
+      skill2Name: '',
+      skill3Name: '',
+      skill4Name: '',
+      skillIds: skills,
+    };
+
+    skillService.findMany(skills)
+  }
+
+  componentDidMount() {
+    skillQuery.selectMany(this.state.skillIds)
+        .subscribe(skills => {
           this.setState({
             skill1Name: skills[0]?.shortName,
             skill2Name: skills[1]?.shortName,
             skill3Name: skills[2]?.shortName,
             skill4Name: skills[3]?.shortName,
           });
-        }
-      });
+        });
   }
 
   render() {

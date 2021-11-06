@@ -1,12 +1,13 @@
 import { ISkillDTO, Skill } from 'assets/frontend/models/Skill';
 import { ClassType } from 'assets/frontend/enums/ClassType';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
+import { SkillFactory } from './skill.factory';
 
 export class SkillRepository {
-    static find(id: number) {
+    static find(id: number): Promise<Skill> {
         return ApiService.get<ISkillDTO>(`/skills/${id}.json`)
             .then(skillData => {
-                return new Skill(skillData.id, skillData.job.id, skillData.shortName);
+                return SkillFactory.createFromDTO(skillData);
             });
     }
 
@@ -16,14 +17,8 @@ export class SkillRepository {
                 const skills: Skill[] = [];
 
                 for (const data of skillData) {
-                    skills.push(new Skill(data.id, data.job.id, data.shortName));
+                    skills.push(SkillFactory.createFromDTO(data));
                 }
-                // for (const data of skillData) {
-                //   skills[data.job.id] = skills[data.job.id] || [];
-                //   skills[data.job.id].push(
-                //     new Skill(data.id, data.job.id, data.shortName),
-                //   );
-                // }
 
                 return skills;
             });
@@ -31,16 +26,22 @@ export class SkillRepository {
 
     static findAllByClass(classType: ClassType): Promise<Skill[]> {
         return ApiService.get<ISkillDTO[]>('/jobs/' + classType + '/skills')
-            .then((skillData) => {
-                const skills = [];
+            .then((dtoArray) => {
+                return SkillFactory.createArrayFromDTOs(dtoArray)
+            });
+    }
 
-                for (const data of skillData) {
-                    skills.push(
-                        new Skill(data.id, data.job.id, data.shortName),
-                    );
-                }
+    static findMany(skillIds: number[]): Promise<Skill[]> {
+        const queryElements = [];
+        let i = 0;
+        for(const queryId of skillIds){
+            queryElements.push(`id[${i}]=${queryId}`);
+            i++;
+        }
 
-                return skills;
+        return ApiService.get<ISkillDTO[]>('/skills.json?'+queryElements.join('&'))
+            .then(dtoArray => {
+                return SkillFactory.createArrayFromDTOs(dtoArray);
             });
     }
 }

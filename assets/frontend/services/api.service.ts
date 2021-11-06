@@ -30,6 +30,6 @@ export class ApiService {
 
   static async getPartySetupsForStage(bossId: number, zoneId: number, level: number): Promise<StagePartySetupDTO[]>{
     // api/bosses/21/party_setups?zoneId=42&level=72
-    return await ApiService.get<StagePartySetupDTO[]>(`/bosses/${bossId}/party_setups?zoneId=${zoneId}&level=${level}`);
+    return await ApiService.get<StagePartySetupDTO[]>(`/bosses/${bossId}/party_setups.json?zone=${zoneId}&level=${level}`);
   }
 }
