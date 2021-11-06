@@ -38,22 +38,4 @@ export class SkillRotation {
 
     throw new Error('SkillRotation.getSkillEnum: Unknown class: ' + ClassType[classType]);
   }
-
-  async getSkillName(index: number) {
-    if (typeof this.skillNames[index] !== 'undefined') {
-      return this.skillNames[index];
-    }
-
-    const skillId = this.skills[index].id || null;
-
-    if(!skillId){
-      return '';
-    }
-
-    await skillService.findSkillById(skillId).subscribe(skill => {
-      if(skill){
-        this.skillNames[index] = skill?.shortName;
-      }
-    });
-  }
 }
