@@ -1,6 +1,6 @@
 import { BossDTO } from './dto/boss.dto';
 import { Boss } from '../models/Boss';
-import { StagePartySetupFactory } from '../factories/StagePartySetupFactory';
+import { StagePartySetupFactory } from 'assets/frontend/zones/stage-party-setup.factory';
 
 export class BossFactory {
   static createFromDTO(dto: BossDTO): Boss {
@@ -14,4 +14,9 @@ export class BossFactory {
 
     return boss;
   }
+
+  static extractId(resourceId: string): number {
+    return Number(resourceId.replace('/api/boss/', ''));
+  }
+
 }

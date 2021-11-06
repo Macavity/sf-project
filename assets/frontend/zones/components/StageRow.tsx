@@ -6,7 +6,7 @@ import { ElementType } from 'assets/frontend/enums/ElementType';
 import { StagePartySetup } from 'assets/frontend/models/StagePartySetup';
 import { SkillService, skillService } from '../../store/skills/skill.service';
 import { ApiService } from '../../services/api.service';
-import { StagePartySetupFactory } from '../../factories/StagePartySetupFactory';
+import { StagePartySetupFactory } from 'assets/frontend/zones/stage-party-setup.factory';
 import { appQuery } from '../../store/app.query';
 
 type LocalProps = {
@@ -38,7 +38,7 @@ export class StageRow extends Component<LocalProps, LocalState> {
     ApiService.getPartySetupsForStage(this.props.bossId, this.props.zoneId, this.props.stageLevel).then(
       setups => {
         const stagePartySetups = StagePartySetupFactory.createArray(setups);
-        //console.debug('Party Setups loaded', this.props.bossName, this.props.stageLevel, stagePartySetups);
+        console.debug(`Party Setups loaded ${this.props.bossName}@${this.props.stageLevel}`, stagePartySetups);
 
         this.setState({
           stagePartySetups,

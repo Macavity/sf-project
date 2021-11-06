@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\PartySetupRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PartySetupRepository::class)]
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'boss' => 'exact'])]
 class PartySetup
 {
     #[ORM\Id]
@@ -18,38 +21,45 @@ class PartySetup
     #[ORM\Column]
     public ?int $stageLevel;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'partySetups')]
     public Zone $zone;
 
-    #[ORM\ManyToOne(inversedBy: 'partySetups')]
+    #[ORM\ManyToOne(cascade: ['persist','remove'], inversedBy: 'partySetups')]
     public Boss $boss;
 
-    #[ORM\Embedded(class: EmbedRotation::class)]
-    public $gladiator;
+    #[ORM\ManyToOne(cascade: ['persist','remove'], inversedBy: 'partySetups')]
+    public ?Stage $stage = null;
 
     #[ORM\Embedded(class: EmbedRotation::class)]
-    public $warrior;
+    public EmbedRotation $gladiator;
 
     #[ORM\Embedded(class: EmbedRotation::class)]
-    public $druid;
+    public EmbedRotation $warrior;
 
     #[ORM\Embedded(class: EmbedRotation::class)]
-    public $shaman;
+    public EmbedRotation $druid;
 
     #[ORM\Embedded(class: EmbedRotation::class)]
-    public $assassin;
+    public EmbedRotation $shaman;
 
     #[ORM\Embedded(class: EmbedRotation::class)]
-    public $hunter;
+    public EmbedRotation $assassin;
 
     #[ORM\Embedded(class: EmbedRotation::class)]
-    public $mage;
+    public EmbedRotation $hunter;
 
     #[ORM\Embedded(class: EmbedRotation::class)]
-    public $warlock;
+    public EmbedRotation $mage;
+
+    #[ORM\Embedded(class: EmbedRotation::class)]
+    public EmbedRotation $warlock;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getScore(): int {
+        return $this->zone->scoreStart + $this->stageLevel;
     }
 }

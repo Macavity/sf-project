@@ -8,7 +8,7 @@ export class StagePartySetup {
 
   constructor(
     public id: number,
-    public zone: Zone,
+    public zoneId: number,
     public stage: number,
     public gladiator: SkillRotation | null = null,
     public warrior: SkillRotation | null = null,
@@ -48,30 +48,5 @@ export class PartySetupList {
   public addRotation(entry: StagePartySetup): PartySetupList {
     this.entries.push(entry);
     return this;
-  }
-
-  public getPartySetupsForStage(areaKey: AreaKey, stageLevel: number): StagePartySetup[] {
-    const filteredEntries = this.entries.filter((rotation: StagePartySetup) => {
-      return rotation.zone.key === areaKey && rotation.stage === stageLevel;
-    });
-
-    if (filteredEntries.length) {
-      return filteredEntries;
-    }
-
-    const reversed = this.entries.reverse();
-
-    const score = Stage.calcScore(areaKey, stageLevel);
-
-    for (const rotation of reversed) {
-      const rotationScore = Stage.calcScore(rotation.zone.key, rotation.stage);
-      // console.log('compare score', rotationScore, '<=', score);
-      if (rotationScore <= score) {
-        // console.log('Found last match: ', rotation);
-        return [rotation];
-      }
-    }
-
-    return [];
   }
 }

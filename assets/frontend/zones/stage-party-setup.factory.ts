@@ -1,8 +1,8 @@
-import { StagePartySetupDTO } from '../zones/dto/stage-party-setup.dto';
 import { StagePartySetup } from '../models/StagePartySetup';
 import { ClassType } from '../enums/ClassType';
-import { SkillRotationFactory } from './skill-rotation.factory';
-import { ZoneFactory } from '../zones/zone.factory';
+import { StagePartySetupDTO } from './dto/stage-party-setup.dto';
+import { SkillRotationFactory } from '../factories/skill-rotation.factory';
+import { ZoneFactory } from './zone.factory';
 
 
 export class StagePartySetupFactory {
@@ -19,8 +19,8 @@ export class StagePartySetupFactory {
 
     return new StagePartySetup(
       dto.id,
-      ZoneFactory.createFromDTO(dto.zone),
-      dto.level,
+      ZoneFactory.extractId(dto.zone),
+      dto.stageLevel,
       gladiator,
       warrior,
       druid,

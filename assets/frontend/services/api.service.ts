@@ -10,16 +10,26 @@ export class ApiService {
     if(url.slice(0,1) === '/'){
       url = url.slice(1);
     }
-    
+
     return axios
       .get<T>(apiURL + url)
       .then(response => response.data)
       .catch(reason => {
-        throw new Error('Zone retrieval failed. ' + reason);
+        throw new Error('Data retrieval failed. ' + reason);
       });
   }
 
+  public static async getResource<T>(resourceId: string): Promise<T> {
+    return axios
+        .get<T>(resourceId)
+        .then(response => response.data)
+        .catch(reason => {
+          throw new Error('Data retrieval failed. ' + reason);
+        });
+  }
+
   static async getPartySetupsForStage(bossId: number, zoneId: number, level: number): Promise<StagePartySetupDTO[]>{
+    // api/bosses/21/party_setups?zoneId=42&level=72
     return await ApiService.get<StagePartySetupDTO[]>(`/bosses/${bossId}/party_setups?zoneId=${zoneId}&level=${level}`);
   }
 }

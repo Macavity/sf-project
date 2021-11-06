@@ -21,7 +21,7 @@ class Skill
     #[ORM\Column]
     public string $shortName;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'skills')]
     public Job $job;
 
     public function getId(): ?int

@@ -27,7 +27,7 @@ export class ZoneListEntry extends Component<MyProps, MyState> {
 
   componentDidMount() {
     zoneService
-      .findZonesForContinent(this.props.continent.id)
+      .findZonesForContinent(this.props.continent.resourceId)
       .subscribe(zones => {
         this.setState({ zones });
       });

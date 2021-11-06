@@ -67,12 +67,6 @@ export class Boss {
     };
   }
 
-  /** @deprecated */
-  public getPartySetupsForStage(areaKey: AreaKey, stageLevel: number): StagePartySetup[] {
-
-    return this.rotationList.getPartySetupsForStage(areaKey, stageLevel);
-  }
-
   public get primaryCounter(): ElementType | null {
     if (this.primaryElement) {
       return Boss.getCounterToElement(this.primaryElement);

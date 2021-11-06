@@ -4,7 +4,7 @@ import { Continent } from '../models/Continent';
 
 export class ContinentRepository {
   public static findAll(): Promise<Continent[]> {
-    return ApiService.get<ContinentDTO[]>('/continents')
+    return ApiService.get<ContinentDTO[]>('/continents.json')
       .then(continents => {
         return continents.map(dto => {
           return new Continent(dto.id, dto.name, dto.slug);

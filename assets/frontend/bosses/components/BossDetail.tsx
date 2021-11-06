@@ -4,6 +4,7 @@ import { StagePartySetup } from '../../models/StagePartySetup';
 import { bossService } from '../boss.service';
 import { bossQuery } from '../boss.query';
 import { PartySetupRow } from './PartySetupRow';
+import { zoneService } from '../../zones/zone.service';
 
 
 type LocalProps = {
@@ -34,13 +35,15 @@ export class BossDetail extends Component<LocalProps, LocalState> {
           console.log('BossQuery.subscribe: Entity set.');
           this.setState({
             boss,
+            partySetups: boss.rotationList?.entries || [],
           });
+          // TODO Load Zone
         }
       });
   }
 
   getEmptyRow() {
-    if (this.state.boss && this.state.boss.rotationList.entries) {
+    if (this.state.boss && this.state.partySetups.length) {
       return null;
     }
 
@@ -52,7 +55,7 @@ export class BossDetail extends Component<LocalProps, LocalState> {
   }
 
   render() {
-    const setups = this.state.boss?.rotationList?.entries || [];
+    const setups = this.state.partySetups;
 
     console.log(setups);
 

@@ -14,4 +14,8 @@ export class Continent {
     public slug: string,
   ) {
   }
+
+  get resourceId(){
+    return '/api/continents/'+this.id;
+  }
 }

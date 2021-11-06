@@ -6,7 +6,7 @@ export class Zone {
 
   constructor(
     public id: number,
-    public continent: ContinentKey,
+    public continent: string,
     public name: string,
     public slug: string = '',
   ) {

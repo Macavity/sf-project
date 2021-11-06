@@ -14,6 +14,7 @@ class ZoneService {
     this.zoneStore.setLoading(true);
     ZoneRepository.findAll()
       .then(zones => {
+        console.debug('Zones loaded', zones);
         this.zoneStore.set(zones);
         this.zoneStore.setLoading(false);
       });
@@ -23,9 +24,11 @@ class ZoneService {
 
   }
 
-  findZonesForContinent(continentKey: ContinentKey): Observable<Zone[]> {
+  findZonesForContinent(continentResourceId: string): Observable<Zone[]> {
     return this.zoneQuery.selectAll({
-      filterBy: ({ continent }) => continent === continentKey,
+      filterBy: ({ continent }) => {
+          return continent === continentResourceId;
+      },
     });
   }
 

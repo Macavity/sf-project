@@ -19,32 +19,11 @@ class PartySetupRepository extends ServiceEntityRepository
         parent::__construct($registry, PartySetup::class);
     }
 
-    // /**
-    //  * @return PartySetup[] Returns an array of PartySetup objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return PartySetup[]
+     */
+    public function findByBoss(?int $bossId): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findBy(['boss' => $bossId]);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?PartySetup
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

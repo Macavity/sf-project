@@ -9,14 +9,14 @@ use Doctrine\ORM\Mapping\Embeddable;
 class EmbedRotation
 {
     #[Column(nullable: true, options: ['default' => null])]
-    public int $skill1;
+    public ?int $skill1 = null;
 
     #[Column(nullable: true, options: ['default' => null])]
-    public int $skill2;
+    public ?int $skill2 = null;
 
     #[Column(nullable: true, options: ['default' => null])]
-    public int $skill3;
+    public ?int $skill3 = null;
 
     #[Column(nullable: true, options: ['default' => null])]
-    public int $skill4;
+    public ?int $skill4 = null;
 }

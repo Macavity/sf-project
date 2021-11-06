@@ -7,21 +7,21 @@ import { BossType } from '../enums/BossType';
 export class BossRepository {
   public static findAll(): Promise<Boss[]> {
     return ApiService
-      .get<BossDTO[]>('/bosses/')
+      .get<BossDTO[]>('/bosses.json')
       .then((zoneResponse: BossDTO[]) => {
         return zoneResponse.map(dto => BossFactory.createFromDTO(dto));
       });
   }
 
   public static findByKey(id: BossType): Promise<Boss> {
-    return ApiService.get<BossDTO>('/bosses/' + id)
+    return ApiService.get<BossDTO>(`/bosses/${id}.json`)
       .then(bossData => {
         return BossFactory.createFromDTO(bossData);
       });
   }
 
   public static findByKeyWithPartySetups(id: BossType): Promise<Boss> {
-    return ApiService.get<BossDTO>('/bosses/' + id + '?join=partySetups&join=partySetups.zone')
+    return ApiService.get<BossDTO>(`/bosses/${id}.json?join=partySetups&join=partySetups.zone`)
       .then(bossData => {
         return BossFactory.createFromDTO(bossData);
       });

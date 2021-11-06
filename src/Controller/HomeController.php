@@ -10,6 +10,7 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
     #[Route('/zones', name: 'zoneList')]
+    #[Route('/zone/{id}', name: 'zoneList')]
     #[Route('/boss-list/?', name: 'bossList')]
     public function index(): Response
     {

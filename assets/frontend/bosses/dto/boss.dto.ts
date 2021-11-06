@@ -8,7 +8,7 @@ export class BossDTO {
     public name: string,
     public primaryElement: ElementType = ElementType.None,
     public secondaryElement: ElementType = ElementType.None,
-    public partySetups: StagePartySetupDTO[] = [],
+    public partySetups: StagePartySetupDTO[]|undefined = [],
     public zone: ZoneDTO|undefined = undefined,
   ) {
   }
