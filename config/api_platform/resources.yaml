@@ -1,0 +1,7 @@
+App\Entity\Boss:
+  itemOperations:
+    get: ~
+    get_party_setups:
+      method: GET
+      path: /boss/{id}/party_setups
+      controller: App\Controller\API\Boss\GetPartySetupsForBossInZone

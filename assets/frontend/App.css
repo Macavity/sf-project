@@ -1,0 +1,85 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.table-hover > tbody > tr:hover {
+  --bs-table-accent-bg: #74ea6f;
+}
+
+.stage-party-setup {
+  display: flex;
+}
+
+.skill-rotation {
+  white-space: nowrap;
+}
+
+.bg-gladiator {
+  background-color: crimson;
+  color: white;
+}
+
+.bg-warrior {
+  background-color: #f86e88;
+  color: white;
+}
+
+.bg-druid {
+  background-color: green;
+  color: white;
+}
+
+.bg-shaman {
+  background-color: #0eba7e;
+  color: white;
+}
+
+.bg-mage {
+  background-color: #1686d5;
+  color: white;
+}
+
+.bg-hunter {
+  background-color: goldenrod;
+  color: white;
+}
+
+.bg-assassin {
+  background-color: gold;
+  color: black;
+}
