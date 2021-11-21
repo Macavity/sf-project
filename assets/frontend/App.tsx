@@ -11,14 +11,14 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 function ZoneKeyRoute(){
   let { zoneKey } = useParams() as any;
   return (
-    <ZoneDetail key={zoneKey} zoneKey={zoneKey} />
+    <ZoneDetail key={zoneKey} zoneKey={Number(zoneKey)} />
   );
 }
 
 function BossDetailKeyRoute(){
   let { bossId } = useParams() as any;
   return (
-    <p><BossDetail bossId={bossId}/></p>
+    <p><BossDetail bossId={Number(bossId)}/></p>
   );
 }
 
@@ -70,9 +70,6 @@ function App() {
           <Route path="/boss/:bossId">
             <BossDetailKeyRoute/>
           </Route>
-          {/*<Route exact path="/admin">*/}
-          {/*  /!*<ReactAdmin/>*!/*/}
-          {/*</Route>*/}
         </Switch>
       </div>
     </Router>

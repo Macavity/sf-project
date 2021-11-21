@@ -25,15 +25,6 @@ class BossService {
         this.bossStore.setLoading(false);
       });
   }
-
-  loadBossWithPartySetups(bossId: number) {
-    this.bossStore.setLoading(true);
-    BossRepository.findByKeyWithPartySetups(bossId)
-      .then((boss: Boss) => {
-        this.bossStore.add(boss);
-        this.bossStore.setLoading(false);
-      });
-  }
 }
 
 export const bossService = new BossService(bossStore, bossQuery);

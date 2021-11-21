@@ -1,16 +1,16 @@
 import { Component } from 'react';
 import { Stage } from '../../models/Stage';
 import { StageRow } from './StageRow';
-import { AreaKey } from '../../enums/AreaKey';
 import { zoneQuery } from '../zone.query';
 import { StageRepository } from '../stage.repository';
 import { zoneService } from '../zone.service';
 import { appQuery } from '../../store/app.query';
-import { Button, FormControlLabel, Switch } from '@mui/material';
+import { FormControlLabel, Switch } from '@mui/material';
 import { skillService } from '../../store/skills/skill.service';
+import { AddSetupButton } from '../../elements/AddSetupButton';
 
 type LocalProps = {
-    zoneKey: AreaKey;
+    zoneKey: number;
 }
 
 type LocalState = {
@@ -22,6 +22,8 @@ type LocalState = {
     isAdmin: boolean;
     onlyLast: boolean;
 }
+
+const sortByLevel = (a: Stage, b: Stage) => (a.level > b.level) ? 1 : -1;
 
 export class ZoneDetail extends Component<LocalProps, LocalState> {
     constructor(props: LocalProps) {
@@ -43,13 +45,17 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
 
     componentDidMount() {
         if (this.props.zoneKey > 0) {
+
+
             StageRepository.findByZone(this.props.zoneKey)
                 .then(stages => {
                     console.log('Stages loaded', stages);
+
                     this.setState({
-                        allStages: stages,
+                        allStages: stages.sort(sortByLevel),
                         filteredStages: this.filteredStages(stages),
                     });
+
                     this.setState({
                         stages: this.shownStages(),
                     });
@@ -83,7 +89,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
             }
         }
 
-        return reduced.reverse();
+        return reduced.sort(sortByLevel);
     }
 
     shownStages() {
@@ -102,6 +108,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
         if (this.state.stages.length) {
             return null;
         }
+
         return (
             <tr>
                 <td colSpan={this.colSpan()}>No Data saved yet.</td>
@@ -123,7 +130,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
             <div>
                 <FormControlLabel control={<Switch checked={this.state.onlyLast} onClick={this.toggleFilter}/>}
                                   label="Show only last occurrences"/>
-                <Button href="/admin#/party_setups/create" variant="contained">Add Setup</Button>
+                <AddSetupButton/>
             </div>
         );
     }

@@ -54,10 +54,10 @@ export class SkillRotationTags extends Component<Props, State> {
     ];
 
     this.state = {
-      skill1Name: '',
-      skill2Name: '',
-      skill3Name: '',
-      skill4Name: '',
+      skill1Name: 'Loading',
+      skill2Name: 'Loading',
+      skill3Name: 'Loading',
+      skill4Name: 'Loading',
       skillIds: skills,
     };
 
@@ -67,6 +67,13 @@ export class SkillRotationTags extends Component<Props, State> {
   componentDidMount() {
     skillQuery.selectMany(this.state.skillIds)
         .subscribe(skills => {
+          if(!skills||skills.length === 0){
+            return;
+          }
+          if(typeof skills[0]?.shortName !== 'string'){
+            console.warn('Unexpected skill content', skills);
+          }
+
           this.setState({
             skill1Name: skills[0]?.shortName,
             skill2Name: skills[1]?.shortName,

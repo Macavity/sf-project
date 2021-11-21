@@ -1,105 +1,131 @@
 import { Boss } from '../../models/Boss';
 import { Component } from 'react';
-import { StagePartySetup } from '../../models/StagePartySetup';
+import { PartySetup } from '../../models/PartySetup';
 import { bossService } from '../boss.service';
 import { bossQuery } from '../boss.query';
-import { PartySetupRow } from './PartySetupRow';
-import { zoneService } from '../../zones/zone.service';
+import { PartySetupRow } from 'assets/frontend/party-setups/components/PartySetupRow';
+import { partySetupService } from '../../party-setups/party-setup.service';
+import { partySetupQuery } from '../../party-setups/party-setup.query';
+import { Button, CircularProgress, FormControlLabel, Switch } from '@mui/material';
+import { appQuery } from '../../store/app.query';
+import { AddSetupButton } from '../../elements/AddSetupButton';
 
 
 type LocalProps = {
-  bossId: number;
+    bossId: number;
 }
 
 type LocalState = {
-  partySetups: StagePartySetup[];
-  boss: Boss | null;
+    partySetups: PartySetup[];
+    boss: Boss | null;
 }
 
 export class BossDetail extends Component<LocalProps, LocalState> {
-  constructor(props: LocalProps) {
-    super(props);
+    constructor(props: LocalProps) {
+        super(props);
 
-    bossService.loadBossWithPartySetups(this.props.bossId);
+        bossService.loadBoss(this.props.bossId);
+        partySetupService.fetchForBoss(this.props.bossId);
 
-    this.state = {
-      partySetups: [],
-      boss: null,
-    };
-  }
+        this.state = {
+            partySetups: [],
+            boss: null,
+        };
+    }
 
-  componentDidMount() {
-    bossQuery.selectEntity(this.props.bossId)
-      .subscribe((boss) => {
-        if (boss) {
-          console.log('BossQuery.subscribe: Entity set.');
-          this.setState({
-            boss,
-            partySetups: boss.rotationList?.entries || [],
-          });
-          // TODO Load Zone
+    getAdminActions() {
+        if (!appQuery.isAdmin()) {
+            return null;
         }
-      });
-  }
 
-  getEmptyRow() {
-    if (this.state.boss && this.state.partySetups.length) {
-      return null;
+        return (
+            <div>
+                <AddSetupButton/>
+            </div>
+        );
     }
 
-    return (
-      <tr>
-        <td colSpan={8}>No Data saved yet.</td>
-      </tr>
-    );
-  }
-
-  render() {
-    const setups = this.state.partySetups;
-
-    console.log(setups);
-
-    if (!this.state.boss) {
-      return (
-        <div>Loading.</div>
-      );
+    componentDidMount() {
+        bossQuery.selectEntity(this.props.bossId)
+            .subscribe((boss) => {
+                if (boss) {
+                    console.log('BossQuery.subscribe: Entity set.');
+                    this.setState({
+                        boss,
+                    });
+                }
+            });
+        partySetupQuery
+            .selectAll({
+                filterBy: entity => entity.bossId === this.props.bossId,
+            })
+            .subscribe(entities => {
+                if (entities.length) {
+                    // console.log('PartySetup subscription result', entities);
+                    this.setState({
+                        partySetups: entities,
+                    });
+                }
+            });
     }
 
-    const boss = this.state.boss;
+    getEmptyRow() {
+        if (this.state.boss && this.state.partySetups.length) {
+            return null;
+        }
 
-    return (
-      <div className="container-fluid">
-        <div className="card">
-          <div className="card-header">{this.state.boss?.name || 'Loading..'}</div>
-          <div className="card-body">
-            <table className="table table-hover table-striped">
-              <thead>
-              <tr>
-                <th scope="col">Area</th>
-                <th scope="col">Level</th>
-                <th scope="col" colSpan={2}>Pet Elements</th>
-                <th scope="col" colSpan={4}>Party</th>
-              </tr>
-              </thead>
-              <tbody>
-              {this.getEmptyRow()}
-              {setups.map((setup, i) => {
-                return (
-                  <PartySetupRow key={setup.zoneId + '-' + i}
-                                 stageLevel={setup.stage}
-                                 zoneId={setup.zoneId}
-                                 bossName={boss.name}
-                                 bossId={boss.id}
-                                 primaryCounterElement={boss.primaryCounter}
-                                 secondaryCounterElement={boss.secondaryCounter}
-                  />
-                );
-              })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    );
-  }
+        return (
+            <tr>
+                <td colSpan={8}>No Data saved yet.</td>
+            </tr>
+        );
+    }
+
+    render() {
+        const setups = this.state.partySetups;
+
+        if (!this.state.boss) {
+            return (
+                <div><CircularProgress /></div>
+            );
+        }
+
+        const boss = this.state.boss;
+
+        return (
+            <div className="container-fluid">
+                <div className="card">
+                    <div className="card-header">{this.state.boss.name}</div>
+                    <div className="card-body">
+                        {this.getAdminActions()}
+                        <table className="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Area</th>
+                                <th scope="col">Level</th>
+                                <th scope="col" colSpan={2}>Pet Elements</th>
+                                <th scope="col" colSpan={4}>Party</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {this.getEmptyRow()}
+                            {setups.map((setup, i) => {
+                                return (
+                                    <PartySetupRow key={setup.zoneId + '-' + i}
+                                                   stageLevel={setup.stage}
+                                                   zoneId={setup.zoneId}
+                                                   bossName={boss.name}
+                                                   bossId={boss.id}
+                                                   primaryCounterElement={boss.primaryCounter}
+                                                   secondaryCounterElement={boss.secondaryCounter}
+                                    />
+                                );
+                            })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }

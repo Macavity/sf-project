@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ulala Hub{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('frontend') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('frontend') }}
+{% endblock %}
+
+{% block body %}
+  <script id="appstate" type="application/json">{{ state|json_encode|raw }}</script>
+  <div id="stats">
+      <table>
+        <thead>
+        <tr>
+          <td>Skill</td>
+          <td>Usage</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for skill in state.skills %}
+        <tr>
+          <td>{{ skill.name }}</td>
+          <td>{{ skill.usage }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  </div>
+{% endblock %}

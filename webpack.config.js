@@ -1,5 +1,8 @@
 const Encore = require('@symfony/webpack-encore');
 const path = require('path');
+const webpack = require('webpack');
+
+require('dotenv').config();
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -23,6 +26,7 @@ Encore
      */
     .addEntry('frontend', './assets/frontend/index.tsx')
     // .addEntry('admin', './assets/admin/index.ts')
+    .addStyleEntry('styles', './assets/frontend/index.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -66,8 +70,10 @@ Encore
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())
 
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+
+    .addPlugin(new webpack.DefinePlugin({
+        ADMIN_URL: JSON.stringify(process.env.ADMIN_URL),
+    }))
 ;
 
 module.exports = Encore.getWebpackConfig();

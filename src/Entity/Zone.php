@@ -2,14 +2,26 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource]
+#[ApiResource(
+    order: ['position' => 'ASC'],
+)]
 #[ORM\Entity]
+#[ApiFilter(SearchFilter::class,
+    properties: [
+        'continent' => SearchFilterInterface::STRATEGY_EXACT,
+        'name' => SearchFilterInterface::STRATEGY_PARTIAL,
+    ]
+)]
 class Zone
 {
     #[ORM\Id]
@@ -34,10 +46,10 @@ class Zone
     #[ORM\ManyToOne(inversedBy: 'zones')]
     public ?Continent $continent = null;
 
-    #[ORM\OneToMany(targetEntity: Stage::class, mappedBy: 'zone')]
+    #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Stage::class)]
     public iterable $stages;
 
-    #[ORM\OneToMany(targetEntity: PartySetup::class, mappedBy: 'zone')]
+    #[ORM\OneToMany(mappedBy: 'zone', targetEntity: PartySetup::class)]
     public iterable $partySetups;
 
     public function __construct()

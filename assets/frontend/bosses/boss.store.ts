@@ -4,7 +4,7 @@ import { Boss } from '../models/Boss';
 export interface BossState extends EntityState<Boss, number> {
 }
 
-@StoreConfig({ name: 'zone', idKey: 'key' })
+@StoreConfig({ name: 'boss', idKey: 'key' })
 export class BossStore extends EntityStore<BossState> {
 }
 

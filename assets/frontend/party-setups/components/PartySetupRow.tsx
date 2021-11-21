@@ -1,14 +1,15 @@
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ElementTag } from 'assets/frontend/elements/ElementTag';
-import { SkillRotationTags } from 'assets/frontend/elements/SkillRotationTags';
 import { ElementType } from 'assets/frontend/enums/ElementType';
-import { StagePartySetup } from 'assets/frontend/models/StagePartySetup';
+import { PartySetup } from 'assets/frontend/models/PartySetup';
 import { SkillService, skillService } from '../../store/skills/skill.service';
-import { ApiService } from '../../services/api.service';
-import { StagePartySetupFactory } from 'assets/frontend/zones/stage-party-setup.factory';
 import { zoneService } from '../../zones/zone.service';
 import { zoneQuery } from '../../zones/zone.query';
+import { PartySetupFactory } from '../party-setup.factory';
+import { partySetupService } from '../party-setup.service';
+import { BossRepository } from '../../bosses/boss.repository';
+import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
 
 type LocalProps = {
     stageLevel: number;
@@ -20,7 +21,7 @@ type LocalProps = {
 }
 
 type LocalState = {
-    stagePartySetups: StagePartySetup[];
+    stagePartySetups: PartySetup[];
     zoneName: string;
 }
 
@@ -32,16 +33,17 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
         this.skillService = skillService;
 
         zoneService.fetchZone(this.props.zoneId);
+        partySetupService.fetchForStage(this.props.bossId, this.props.zoneId, this.props.stageLevel);
         this.state = {
-            stagePartySetups: [] as StagePartySetup[],
+            stagePartySetups: [] as PartySetup[],
             zoneName: ' ',
         };
     }
 
     componentDidMount() {
-        ApiService.getPartySetupsForStage(this.props.bossId, this.props.zoneId, this.props.stageLevel).then(
-            setups => {
-                const stagePartySetups = StagePartySetupFactory.createArray(setups);
+        BossRepository.getPartySetupsForBossInZone(this.props.bossId, this.props.zoneId, this.props.stageLevel).then(
+            (setups) => {
+                const stagePartySetups = PartySetupFactory.createArray(setups);
 
                 this.setState({
                     stagePartySetups,
@@ -51,12 +53,12 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
 
         zoneQuery.selectEntity(this.props.zoneId)
             .subscribe(zone => {
-                if(zone){
+                if (zone) {
                     this.setState({
                         zoneName: zone.name,
                     });
                 }
-            })
+            });
     }
 
     render() {
@@ -78,12 +80,8 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
                     {this.state.stagePartySetups.map((stagePartySetup, i) => (
                         <div className="stage-party-setup" key={this.props.stageLevel + '-' + i}>
                             {stagePartySetup.getOrderedSkillRotations().map((skillRotation, j) => (
-                                <SkillRotationTags key={this.props.stageLevel + '-skill-rota-' + j}
-                                                   classType={skillRotation.classType}
-                                                   skill1={skillRotation.skill1}
-                                                   skill2={skillRotation.skill2}
-                                                   skill3={skillRotation.skill3}
-                                                   skill4={skillRotation.skill4}
+                                <JobRotationTags key={this.props.stageLevel + '-skill-rota-' + j}
+                                                 iri={skillRotation}
                                 />
                             ))}
                         </div>

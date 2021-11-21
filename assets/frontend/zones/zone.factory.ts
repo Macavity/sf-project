@@ -9,6 +9,6 @@ export class ZoneFactory {
   }
 
   static extractId(resourceId: string): number {
-    return Number(resourceId.replace('/api/zone/', ''));
+    return Number(resourceId.replace('/api/zones/', ''));
   }
 }

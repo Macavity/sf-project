@@ -2,6 +2,7 @@ import { ISkillDTO, Skill } from '../../models/Skill';
 import { extractJobIdFromResourceId } from '../../enums/ClassType';
 
 export class SkillFactory {
+
     static createFromDTO(dto: ISkillDTO) {
         return new Skill(
             dto.id,
@@ -18,5 +19,12 @@ export class SkillFactory {
         }
 
         return skills;
+    }
+
+    static extractId(resourceId: string | undefined | null): number {
+        if (!resourceId) {
+            return 0;
+        }
+        return Number(resourceId.replace('/api/skills/', ''));
     }
 }

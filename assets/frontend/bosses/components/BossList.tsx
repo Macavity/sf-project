@@ -19,6 +19,7 @@ export class BossList extends Component<Props, State> {
     super(props);
 
     bossService.initBosses();
+
     this.state = {
       bosses: [],
       isLoading: true,
@@ -61,10 +62,10 @@ export class BossList extends Component<Props, State> {
               </tr>
               </thead>
               <tbody>
-              {bosses.map(boss => (
-                <tr className="el-table__row">
+              {bosses.map((boss, n) => (
+                <tr key={`boss-row-${n}`} className="el-table__row">
                   <td className="text-nowrap">
-                    <Link to={""}>{boss.name}</Link>
+                    <Link to={`/boss/${boss.id}`}>{boss.name}</Link>
                   </td>
                   <td width="50">
                     {boss.primaryElement ? (<ElementTag element={boss.primaryElement} />) : null}

@@ -8,4 +8,7 @@ api_platform:
     swagger:
         versions: [3]
     defaults:
-        stateless: true
+        stateless: false
+        pagination_maximum_items_per_page: 200
+    eager_loading:
+        max_joins: 50
