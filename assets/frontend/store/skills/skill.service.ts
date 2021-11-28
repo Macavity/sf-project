@@ -11,11 +11,13 @@ export class SkillService {
     }
 
     initSkills() {
+        //console.log('Init Skills');
         this.skillStore.setLoading(true);
 
         SkillRepository.findAll().then(skillsByJob => {
             this.skillStore.set(skillsByJob);
-            // console.log('Set Skills', skillsByJob);
+
+            //console.log('Set Skills', skillsByJob);
 
             this.skillStore.setLoading(false);
         });
@@ -23,11 +25,14 @@ export class SkillService {
 
     find(skillId: number): Observable<Skill | undefined> {
         if (!this.skillQuery.hasEntity(skillId)) {
+            console.log('Missing skill => Load');
+            this.skillStore.setLoading(true);
             SkillRepository.find(skillId)
                 .then((skill: Skill) => {
                     if (skill) {
                         this.skillStore.add(skill);
                     }
+                    this.skillStore.setLoading(false);
                 });
         }
 
@@ -49,12 +54,12 @@ export class SkillService {
         }
 
         if (missingSkills.length) {
-            // console.group('Load missing skills', missingSkills);
+            console.group('Load missing skills', missingSkills);
             SkillRepository.findMany(missingSkills)
                 .then(skills => {
                     for (const skill of skills) {
                         this.skillStore.add(skill);
-                        // console.debug('=> Added',skill);
+                        console.debug('=> Added',skill);
                     }
                     console.groupEnd();
                 });

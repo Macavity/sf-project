@@ -5,6 +5,8 @@ import { jobRotationQuery } from '../job-rotation.query';
 import { skillQuery } from '../../store/skills/skill.query';
 import { JobRotationFactory } from '../../party-setups/job-rotation.factory';
 import { extractJobRotationIdFromIRI } from '../job-rotation.interface';
+import { skillService } from '../../store/skills/skill.service';
+import { SkillTag } from './SkillTag';
 
 type Props = {
     iri: string;
@@ -13,38 +15,13 @@ type Props = {
 type State = {
     job: number | null;
     id: number | null;
-    skill1Name: string;
-    skill2Name: string;
-    skill3Name: string;
-    skill4Name: string;
-    skillIds: number[];
+    skill1: string|null;
+    skill2: string|null;
+    skill3: string|null;
+    skill4: string|null;
 };
 
 export class JobRotationTags extends Component<Props, State> {
-
-    jobClass = () => {
-        if (!this.state.job) {
-            return '';
-        }
-        switch (this.state.job) {
-            case ClassType.Gladiator:
-                return 'bg-gladiator';
-            case ClassType.Warrior:
-                return 'bg-warrior';
-            case ClassType.Druid:
-                return 'bg-druid';
-            case ClassType.Shaman:
-                return 'bg-shaman';
-            case ClassType.Assassin:
-                return 'bg-assassin';
-            case ClassType.Hunter:
-                return 'bg-hunter';
-            case ClassType.Mage:
-                return 'bg-mage';
-        }
-
-        throw new Error('SkillRotationTags.jobClass - Not handled class ' + this.state.job);
-    };
 
     constructor(props: Props) {
         super(props);
@@ -53,11 +30,10 @@ export class JobRotationTags extends Component<Props, State> {
         this.state = {
             job: null,
             id: JobRotationFactory.extractId(this.props.iri),
-            skill1Name: 'Loading',
-            skill2Name: 'Loading',
-            skill3Name: 'Loading',
-            skill4Name: 'Loading',
-            skillIds: [],
+            skill1: null,
+            skill2: null,
+            skill3: null,
+            skill4: null,
         };
 
         jobRotationService.fetch(this.props.iri);
@@ -69,40 +45,26 @@ export class JobRotationTags extends Component<Props, State> {
                 .selectEntity(this.state.id)
                 .subscribe(jobRotation => {
                     if (jobRotation) {
+                        const skillIds = JobRotationFactory.extractSkillIds(jobRotation);
                         this.setState({
                             job: extractJobIdFromResourceId(jobRotation.job),
-                            skillIds: JobRotationFactory.extractSkillIds(jobRotation),
+                            skill1: jobRotation.skill1,
+                            skill2: jobRotation.skill2,
+                            skill3: jobRotation.skill3,
+                            skill4: jobRotation.skill4,
                         });
-
-                        skillQuery.selectMany(this.state.skillIds)
-                            .subscribe(skills => {
-                                if (!skills || skills.length === 0) {
-                                    return;
-                                }
-                                if (typeof skills[0]?.shortName !== 'string') {
-                                    console.warn('Unexpected skill content', skills);
-                                }
-
-                                this.setState({
-                                    skill1Name: skills[0]?.shortName,
-                                    skill2Name: skills[1]?.shortName,
-                                    skill3Name: skills[2]?.shortName,
-                                    skill4Name: skills[3]?.shortName,
-                                });
-                            });
                     }
                 });
         }
     }
 
     render() {
-        const classes = 'badge m-1 ' + this.jobClass();
         return (
             <div className="skill-rotation">
-                <span className={classes}>{this.state.skill1Name}</span><br/>
-                <span className={classes}>{this.state.skill2Name}</span><br/>
-                <span className={classes}>{this.state.skill3Name}</span><br/>
-                <span className={classes}>{this.state.skill4Name}</span>
+                {this.state.skill1 ? (<SkillTag iri={this.state.skill1}/>) : null}<br/>
+                {this.state.skill2 ? (<SkillTag iri={this.state.skill2}/>) : null}<br/>
+                {this.state.skill3 ? (<SkillTag iri={this.state.skill3}/>) : null}<br/>
+                {this.state.skill4 ? (<SkillTag iri={this.state.skill4}/>) : null}
             </div>
         );
     }

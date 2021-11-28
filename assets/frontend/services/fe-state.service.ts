@@ -1,3 +1,5 @@
+import { IFrontendState } from '../interfaces/IFrontendState';
+
 export class FrontendStateService {
     public static get(): IFrontendState {
         const $appState = document.getElementById('appstate');
@@ -19,3 +21,6 @@ export class FrontendStateService {
         return JSON.parse(element.innerHTML.trim());
     }
 }
+
+export const frontendState: IFrontendState = FrontendStateService.get();
+

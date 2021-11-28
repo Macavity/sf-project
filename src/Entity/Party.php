@@ -15,7 +15,7 @@ class Party
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToOne(targetEntity: Character::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Character::class, cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $leader;
 

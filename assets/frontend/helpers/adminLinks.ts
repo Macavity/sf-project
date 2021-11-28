@@ -9,17 +9,17 @@ export function setupIri(setupId: number) {
 }
 
 export function editStageURL(stageId: number) {
-    return ADMIN_URL + `/admin#/stages/${encodeURIComponent(stageIri(stageId))}`;
+    return ADMIN_URL + `#/stages/${encodeURIComponent(stageIri(stageId))}`;
 }
 
 export function editSetupURL(setupId: number) {
-    return ADMIN_URL + `/admin#/party_setups/${encodeURIComponent(setupIri(setupId))}`;
+    return ADMIN_URL + `#/party_setups/${encodeURIComponent(setupIri(setupId))}`;
 }
 
 export function addSetupURL() {
-    return ADMIN_URL + '/admin#/party_setups/create';
+    return ADMIN_URL + '#/party_setups/create';
 }
 
 export function addStageURL() {
-    return ADMIN_URL + '/admin#/stages/create';
+    return ADMIN_URL + '#/stages/create';
 }

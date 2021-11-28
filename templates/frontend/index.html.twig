@@ -10,8 +10,12 @@
 {% block javascripts %}
   {{ parent() }}
   {{ encore_entry_script_tags('frontend') }}
+  <script id="appstate" type="application/json">{{ state|json_encode|raw }}</script>
 {% endblock %}
 
 {% block body %}
-  <div id="app"></div>
+  <div class="container-fluid">
+    {% include 'frontend/navbar.html.twig' %}
+    <div id="app"></div>
+  </div>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Enum\JobType as JobType;
 use App\Repository\PartySetupRepository;
@@ -13,12 +14,17 @@ use Exception;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartySetupRepository::class)]
-#[ApiResource]
+#[ApiResource(
+)]
+#[ApiFilter(OrderFilter::class, properties: [
+    'slug.name' => 'ASC',
+])]
 #[ApiFilter(SearchFilter::class, properties: [
     'id' => 'exact',
     'boss' => 'exact',
     'zone' => 'exact',
 ])]
+
 class PartySetup
 {
     #[ORM\Id]
@@ -30,12 +36,12 @@ class PartySetup
     public ?int $stageLevel;
 
     #[ORM\ManyToOne(inversedBy: 'partySetups')]
-    private Zone $zone;
+    private ?Zone $zone = null;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'partySetups')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'partySetups')]
     public Boss $boss;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'partySetups')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'partySetups')]
     public ?Stage $stage = null;
 
     #[ORM\ManyToOne(cascade: ['persist'])]
@@ -93,6 +99,10 @@ class PartySetup
 
     public function getScore(): int
     {
+        if(!$this->zone){
+            return 0;
+        }
+
         return $this->zone->scoreStart + $this->stageLevel;
     }
 
@@ -144,7 +154,7 @@ class PartySetup
         throw new Exception('Unrecognized job type');
     }
 
-    public function getZone(): Zone
+    public function getZone(): ?Zone
     {
         return $this->zone;
     }

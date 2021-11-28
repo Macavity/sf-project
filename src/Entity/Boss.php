@@ -57,11 +57,11 @@ class Boss
     #[Groups(['stage-list'])]
     public int $secondaryElement = Element::NONE;
 
-    #[ORM\OneToMany(mappedBy: 'boss', targetEntity: Stage::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'boss', targetEntity: Stage::class, cascade: ['persist'])]
     /** @var Stage[] */
     public iterable $stages;
 
-    #[ORM\OneToMany(targetEntity: PartySetup::class, mappedBy: 'boss', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: PartySetup::class, mappedBy: 'boss', cascade: ['persist'])]
     #[ApiSubresource]
     /** @var PartySetup[] */
     public iterable $partySetups;

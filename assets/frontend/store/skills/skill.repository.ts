@@ -2,6 +2,7 @@ import { ISkillDTO, Skill } from 'assets/frontend/models/Skill';
 import { ClassType } from 'assets/frontend/enums/ClassType';
 import { ApiService } from '../../services/api.service';
 import { SkillFactory } from './skill.factory';
+import { frontendState } from '../../services/fe-state.service';
 
 export class SkillRepository {
     static find(id: number): Promise<Skill> {
@@ -12,23 +13,25 @@ export class SkillRepository {
     }
 
     static findAll() {
-        return ApiService.get<ISkillDTO[]>('/skills.json')
-            .then((skillData) => {
-                const skills: Skill[] = [];
+        const skillData = frontendState.skills;
+        const skills = [];
 
-                for (const data of skillData) {
-                    skills.push(SkillFactory.createFromDTO(data));
-                }
+        for (const data of skillData) {
+            skills.push(SkillFactory.createFromDTO(data));
+        }
 
-                return skills;
-            });
-    }
+        return Promise.resolve(skills);
 
-    static findAllByClass(classType: ClassType): Promise<Skill[]> {
-        return ApiService.get<ISkillDTO[]>('/jobs/' + classType + '/skills')
-            .then((dtoArray) => {
-                return SkillFactory.createArrayFromDTOs(dtoArray)
-            });
+        // return ApiService.get<ISkillDTO[]>('/skills.json')
+        //     .then((skillData) => {
+        //         const skills: Skill[] = [];
+        //
+        //         for (const data of skillData) {
+        //             skills.push(SkillFactory.createFromDTO(data));
+        //         }
+        //
+        //         return skills;
+        //     });
     }
 
     static findMany(skillIds: number[]): Promise<Skill[]> {

@@ -10,6 +10,9 @@ import { PartySetupFactory } from '../party-setup.factory';
 import { partySetupService } from '../party-setup.service';
 import { BossRepository } from '../../bosses/boss.repository';
 import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
+import { appQuery } from '../../store/app.query';
+import { EditSetupButton } from '../../elements/EditSetupButton';
+import './party-setup-row.module.scss';
 
 type LocalProps = {
     stageLevel: number;
@@ -61,8 +64,19 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
             });
     }
 
-    render() {
+    getAdminActions() {
+        // if (appQuery.isAdmin()) {
+        //     return (
+        //         <div className="stage-party-setup__actions">
+        //             <EditSetupButton setupId={this.state.stagePartySetups[0]?.id}/>
+        //         </div>
+        //     );
+        // }
 
+        return null;
+    }
+
+    render() {
         return (
             <tr className="el-table__row">
                 <th scope="row">
@@ -79,11 +93,14 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
                 <td colSpan={4}>
                     {this.state.stagePartySetups.map((stagePartySetup, i) => (
                         <div className="stage-party-setup" key={this.props.stageLevel + '-' + i}>
-                            {stagePartySetup.getOrderedSkillRotations().map((skillRotation, j) => (
-                                <JobRotationTags key={this.props.stageLevel + '-skill-rota-' + j}
-                                                 iri={skillRotation}
-                                />
-                            ))}
+                            <div className="stage-party-setup__skills">
+                                {stagePartySetup.getOrderedSkillRotations().map((skillRotation, j) => (
+                                    <JobRotationTags key={this.props.stageLevel + '-skill-rota-' + j}
+                                                     iri={skillRotation}
+                                    />
+                                ))}
+                            </div>
+                            {this.getAdminActions()}
                         </div>
                     ))}
                 </td>

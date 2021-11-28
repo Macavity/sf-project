@@ -4,15 +4,14 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { akitaDevtools } from '@datorama/akita';
-import { ApolloProvider } from '@apollo/client';
-import { apiClient } from './services/api.service';
+import { skillStore } from './store/skills/skill.store';
+import { Skill } from './models/Skill';
 
+skillStore.add(new Skill(0, 0, 'None'));
 
 ReactDOM.render(
     <React.StrictMode>
-        <ApolloProvider client={apiClient}>
-            <App/>
-        </ApolloProvider>
+        <App/>
     </React.StrictMode>,
     document.getElementById('app'),
 );

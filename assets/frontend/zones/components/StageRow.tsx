@@ -10,9 +10,6 @@ import { EditStageButton } from '../../elements/EditStageButton';
 import { EditSetupButton } from '../../elements/EditSetupButton';
 import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
 
-declare var ADMIN_URL: string;
-console.log('ADMIN_URL', ADMIN_URL);
-
 type LocalProps = {
     stageId: number;
     stageLevel: number;
@@ -52,15 +49,15 @@ export class StageRow extends Component<LocalProps, LocalState> {
     }
 
     getAdminCol() {
-        if (appQuery.isAdmin()) {
-            return (
-                <td>
-                    <EditStageButton stageId={this.props.stageId}/>
-                    &nbsp;
-                    <EditSetupButton setupId={this.state.stagePartySetups[0]?.id}/>
-                </td>
-            );
-        }
+        // if (appQuery.isAdmin()) {
+        //     return (
+        //         <td>
+        //             <EditStageButton stageId={this.props.stageId}/>
+        //             &nbsp;
+        //             <EditSetupButton setupId={this.state.stagePartySetups[0]?.id}/>
+        //         </td>
+        //     );
+        // }
 
         return null;
     }

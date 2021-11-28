@@ -9,6 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\SkillRepository;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
@@ -28,7 +29,7 @@ class Skill
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column]
     public string $name;
@@ -47,5 +48,15 @@ class Skill
     public function getLabel(): string
     {
         return $this->name . '(' . substr($this->job->name, 0, 1) . ')';
+    }
+
+    #[ArrayShape(['id' => "int|null", 'name' => "string", 'shortName' => "string", 'job' => "int|null"])] public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->name,
+            'shortName' => $this->shortName,
+            'job' => '/api/jobs/'.$this->job->getId(),
+        ];
     }
 }

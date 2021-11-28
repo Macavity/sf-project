@@ -28,7 +28,7 @@ class Continent
     #[Assert\NotBlank]
     public string $slug = '';
 
-    #[ORM\OneToMany(mappedBy: 'continent', targetEntity: Zone::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'continent', targetEntity: Zone::class, cascade: ['persist'])]
     /** @var Zone[] */
     public iterable $zones;
 
