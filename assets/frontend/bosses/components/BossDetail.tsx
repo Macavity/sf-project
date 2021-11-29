@@ -6,7 +6,17 @@ import { bossQuery } from '../boss.query';
 import { PartySetupRow } from 'assets/frontend/party-setups/components/PartySetupRow';
 import { partySetupService } from '../../party-setups/party-setup.service';
 import { partySetupQuery } from '../../party-setups/party-setup.query';
-import { Button, CircularProgress, FormControlLabel, Switch } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CircularProgress,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow
+} from '@mui/material';
 import { appQuery } from '../../store/app.query';
 import { AddSetupButton } from '../../elements/AddSetupButton';
 
@@ -86,28 +96,27 @@ export class BossDetail extends Component<LocalProps, LocalState> {
 
         if (!this.state.boss) {
             return (
-                <div><CircularProgress /></div>
+                <div><CircularProgress/></div>
             );
         }
 
         const boss = this.state.boss;
 
         return (
-            <div className="container-fluid">
-                <div className="card">
-                    <div className="card-header">{this.state.boss.name}</div>
-                    <div className="card-body">
-                        {this.getAdminActions()}
-                        <table className="table table-hover table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">Area</th>
-                                <th scope="col">Level</th>
-                                <th scope="col" colSpan={2}>Pet Elements</th>
-                                <th scope="col" colSpan={4}>Party</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+            <Card>
+                <CardHeader title={this.state.boss.name}/>
+                <CardContent>
+                    {this.getAdminActions()}
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Area</TableCell>
+                                <TableCell>Level</TableCell>
+                                <TableCell colSpan={2}>Pet Elements</TableCell>
+                                <TableCell colSpan={4}>Party</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                             {this.getEmptyRow()}
                             {setups.map((setup, i) => {
                                 return (
@@ -121,11 +130,10 @@ export class BossDetail extends Component<LocalProps, LocalState> {
                                     />
                                 );
                             })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
         );
     }
 }

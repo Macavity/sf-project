@@ -1,12 +1,10 @@
 import { Component } from 'react';
-import { ClassType, extractJobIdFromResourceId } from '../../enums/ClassType';
+import { extractJobIdFromResourceId } from '../../enums/ClassType';
 import { jobRotationService } from '../job-rotation.service';
 import { jobRotationQuery } from '../job-rotation.query';
-import { skillQuery } from '../../store/skills/skill.query';
 import { JobRotationFactory } from '../../party-setups/job-rotation.factory';
-import { extractJobRotationIdFromIRI } from '../job-rotation.interface';
-import { skillService } from '../../store/skills/skill.service';
 import { SkillTag } from './SkillTag';
+import { Stack } from '@mui/material';
 
 type Props = {
     iri: string;
@@ -15,10 +13,10 @@ type Props = {
 type State = {
     job: number | null;
     id: number | null;
-    skill1: string|null;
-    skill2: string|null;
-    skill3: string|null;
-    skill4: string|null;
+    skill1: string | null;
+    skill2: string | null;
+    skill3: string | null;
+    skill4: string | null;
 };
 
 export class JobRotationTags extends Component<Props, State> {
@@ -60,12 +58,12 @@ export class JobRotationTags extends Component<Props, State> {
 
     render() {
         return (
-            <div className="skill-rotation">
+            <Stack spacing={1} direction="column" sx={{mr: 1}}>
                 {this.state.skill1 ? (<SkillTag iri={this.state.skill1}/>) : null}<br/>
                 {this.state.skill2 ? (<SkillTag iri={this.state.skill2}/>) : null}<br/>
                 {this.state.skill3 ? (<SkillTag iri={this.state.skill3}/>) : null}<br/>
                 {this.state.skill4 ? (<SkillTag iri={this.state.skill4}/>) : null}
-            </div>
+            </Stack>
         );
     }
 }

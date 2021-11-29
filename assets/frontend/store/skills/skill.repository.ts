@@ -4,8 +4,14 @@ import { ApiService } from '../../services/api.service';
 import { SkillFactory } from './skill.factory';
 import { frontendState } from '../../services/fe-state.service';
 
+export const NoSkill = new Skill(0, 0, 'None');
+
 export class SkillRepository {
     static find(id: number): Promise<Skill> {
+        if(id === 0){
+            return Promise.resolve(NoSkill);
+        }
+
         return ApiService.get<ISkillDTO>(`/skills/${id}.json`)
             .then(skillData => {
                 return SkillFactory.createFromDTO(skillData);

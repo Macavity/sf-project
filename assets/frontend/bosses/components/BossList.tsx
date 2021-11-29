@@ -4,83 +4,101 @@ import { ElementTag } from '../../elements/ElementTag';
 import { bossQuery } from '../boss.query';
 import { bossService } from '../boss.service';
 import { Boss } from '../../models/Boss';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CircularProgress,
+    Container,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow
+} from '@mui/material';
 
 interface Props {
 
 }
 
 interface State {
-  bosses: Boss[];
-  isLoading: boolean;
+    bosses: Boss[];
+    isLoading: boolean;
 }
 
 export class BossList extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+    constructor(props: Props) {
+        super(props);
 
-    bossService.initBosses();
+        bossService.initBosses();
 
-    this.state = {
-      bosses: [],
-      isLoading: true,
-    };
-  }
+        this.state = {
+            bosses: [],
+            isLoading: true,
+        };
+    }
 
-  componentDidMount() {
-    console.group('BossList.componentDidMount');
-    bossQuery.selectAll()
-      .subscribe(bosses => {
-        console.log('bosses', bosses);
-        this.setState({ bosses });
-        this.setState({ isLoading: false });
-        console.groupEnd();
-      });
-  }
+    componentDidMount() {
+        console.group('BossList.componentDidMount');
+        bossQuery.selectAll()
+            .subscribe(bosses => {
+                console.log('bosses', bosses);
+                this.setState({ bosses });
+                this.setState({ isLoading: false });
+                console.groupEnd();
+            });
+    }
 
-  render() {
-    const bosses = this.state.bosses;
+    render() {
+        const bosses = this.state.bosses;
 
-    return (
-      <div className="container-fluid">
-        <div className="card">
-          <div className="card-header">Boss List</div>
-          <div className="card-body">
-            <form className="d-flex">
-              <input className="form-control me-2" type="search" placeholder="Filter" aria-label="Filter" />
-            </form>
-            {this.state.isLoading ? (
-              <div className="d-flex align-items-center">
-                <strong>Loading...</strong>
-                <div className="spinner-border ms-auto" role="status" aria-hidden="true" />
-              </div>
-            ) : null}
-            <table className="table">
-              <thead>
-              <tr>
-                <th scope="col">Boss</th>
-                <th scope="col" colSpan={2}>Pet Elements</th>
-              </tr>
-              </thead>
-              <tbody>
-              {bosses.map((boss, n) => (
-                <tr key={`boss-row-${n}`} className="el-table__row">
-                  <td className="text-nowrap">
-                    <Link to={`/boss/${boss.id}`}>{boss.name}</Link>
-                  </td>
-                  <td width="50">
-                    {boss.primaryElement ? (<ElementTag element={boss.primaryElement} />) : null}
-                  </td>
-                  <td width="50">
-                    {boss.secondaryElement ? (<ElementTag element={boss.secondaryElement} />) : null}
-                  </td>
-                </tr>
-              ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    );
-  }
+        return (
+            <div className="container-fluid">
+                <Card>
+                    <CardHeader title="Boss List"/>
+                    <CardContent>
+                        {this.state.isLoading ? (
+                            <Container>
+                                <strong>Loading...</strong><br/>
+                                <CircularProgress/>
+                            </Container>
+                        ) : (
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Boss</TableCell>
+                                        <TableCell colSpan={2}>Pet Elements</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {bosses.map((boss, n) => (
+                                        <TableRow key={`boss-row-${n}`}>
+                                            <TableCell>
+                                                <Link to={`/boss/${boss.id}`}>{boss.name}</Link>
+                                            </TableCell>
+                                            <TableCell width="50">
+                                                {boss.primaryElement ? (
+                                                    <ElementTag element={boss.primaryElement}/>) : null}
+                                            </TableCell>
+                                            <TableCell width="50">
+                                                {boss.secondaryElement ? (
+                                                    <ElementTag element={boss.secondaryElement}/>) : null}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        )}
+                    </CardContent>
+                </Card>
+                <div className="card">
+                    <div className="card-header">Boss List</div>
+                    <div className="card-body">
+
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
