@@ -1,7 +1,7 @@
 import 'bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import ToggleColorMode from './App';
 import reportWebVitals from './reportWebVitals';
 import { akitaDevtools } from '@datorama/akita';
 import { skillStore } from './store/skills/skill.store';
@@ -11,7 +11,7 @@ skillStore.add(new Skill(0, 0, 'None'));
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <ToggleColorMode/>
     </React.StrictMode>,
     document.getElementById('app'),
 );

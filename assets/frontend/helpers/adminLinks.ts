@@ -1,4 +1,4 @@
-declare var ADMIN_URL: string;
+declare let ADMIN_URL: string;
 
 export function stageIri(stageId: number) {
     return '/api/stages/' + stageId;

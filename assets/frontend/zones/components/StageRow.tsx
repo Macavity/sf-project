@@ -1,14 +1,11 @@
 import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import { ElementTag } from 'assets/frontend/elements/ElementTag';
 import { ElementType } from 'assets/frontend/enums/ElementType';
 import { PartySetup } from 'assets/frontend/models/PartySetup';
-import { appQuery } from '../../store/app.query';
 import { BossRepository } from '../../bosses/boss.repository';
 import { PartySetupFactory } from '../../party-setups/party-setup.factory';
-import { EditStageButton } from '../../elements/EditStageButton';
-import { EditSetupButton } from '../../elements/EditSetupButton';
 import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
+import { Link, TableCell, TableRow } from '@mui/material';
 
 type LocalProps = {
     stageId: number;
@@ -18,6 +15,7 @@ type LocalProps = {
     bossName: string;
     primaryCounterElement: ElementType | null;
     secondaryCounterElement: ElementType | null;
+    variant?: 'stage' | 'boss';
 }
 
 type LocalState = {
@@ -65,19 +63,19 @@ export class StageRow extends Component<LocalProps, LocalState> {
     render() {
 
         return (
-            <tr className="el-table__row">
-                <th scope="row">{this.props.stageLevel}</th>
-                <td className="text-nowrap">
-                    <NavLink to={`/boss/${this.props.bossId}`}>{this.props.bossName}</NavLink>
-                </td>
-                <td width="50">
+            <TableRow sx={{ verticalAlign: 'top' }}>
+                <TableCell component="th">{this.props.stageLevel}</TableCell>
+                <TableCell>
+                    <Link href={`/boss/${this.props.bossId}`}>{this.props.bossName}</Link>
+                </TableCell>
+                <TableCell width="50">
                     <ElementTag element={this.props.primaryCounterElement} key={this.props.stageLevel + '-element-1'}/>
-                </td>
-                <td width="50">
+                </TableCell>
+                <TableCell width="50">
                     <ElementTag element={this.props.secondaryCounterElement}
                                 key={this.props.stageLevel + '-element-2'}/>
-                </td>
-                <td colSpan={4}>
+                </TableCell>
+                <TableCell colSpan={4}>
                     {this.state.stagePartySetups.map((stagePartySetup, i) => (
                         <div className="stage-party-setup" key={this.props.stageLevel + '-' + i}>
                             {stagePartySetup.getOrderedSkillRotations().map((skillRotation, j) => (
@@ -87,9 +85,8 @@ export class StageRow extends Component<LocalProps, LocalState> {
                             ))}
                         </div>
                     ))}
-                </td>
-                {this.getAdminCol()}
-            </tr>
+                </TableCell>
+            </TableRow>
         );
     }
 }

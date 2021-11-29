@@ -10,9 +10,8 @@ import { PartySetupFactory } from '../party-setup.factory';
 import { partySetupService } from '../party-setup.service';
 import { BossRepository } from '../../bosses/boss.repository';
 import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
-import { appQuery } from '../../store/app.query';
-import { EditSetupButton } from '../../elements/EditSetupButton';
 import './party-setup-row.module.scss';
+import { Link, TableCell, TableRow } from '@mui/material';
 
 type LocalProps = {
     stageLevel: number;
@@ -78,19 +77,19 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
 
     render() {
         return (
-            <tr className="el-table__row">
-                <th scope="row">
-                    <NavLink to={`/zone/${this.props.zoneId}`}>{this.state.zoneName}</NavLink>
-                </th>
-                <th scope="row">{this.props.stageLevel}</th>
-                <td width="50">
+            <TableRow sx={{ verticalAlign: 'top' }}>
+                <TableCell component="th" scope="row">
+                    <Link href={`/zone/${this.props.zoneId}`}>{this.state.zoneName}</Link>
+                </TableCell>
+                <TableCell scope="row">{this.props.stageLevel}</TableCell>
+                <TableCell width="50">
                     <ElementTag element={this.props.primaryCounterElement} key={this.props.stageLevel + '-element-1'}/>
-                </td>
-                <td width="50">
+                </TableCell>
+                <TableCell width="50">
                     <ElementTag element={this.props.secondaryCounterElement}
                                 key={this.props.stageLevel + '-element-2'}/>
-                </td>
-                <td colSpan={4}>
+                </TableCell>
+                <TableCell colSpan={4}>
                     {this.state.stagePartySetups.map((stagePartySetup, i) => (
                         <div className="stage-party-setup" key={this.props.stageLevel + '-' + i}>
                             <div className="stage-party-setup__skills">
@@ -103,8 +102,8 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
                             {this.getAdminActions()}
                         </div>
                     ))}
-                </td>
-            </tr>
+                </TableCell>
+            </TableRow>
         );
     }
 }

@@ -24,3 +24,4 @@ export class FrontendStateService {
 
 export const frontendState: IFrontendState = FrontendStateService.get();
 
+(window as any).frontendState = frontendState;

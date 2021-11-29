@@ -3,9 +3,11 @@ import { ClassType } from '../../enums/ClassType';
 import { skillQuery } from '../../store/skills/skill.query';
 import { SkillFactory } from '../../store/skills/skill.factory';
 import { skillService } from '../../store/skills/skill.service';
+import { Chip } from '@mui/material';
+import { SxProps } from '@mui/system';
 
 type Props = {
-    iri: string|null;
+    iri: string | null;
 };
 
 type State = {
@@ -41,6 +43,37 @@ export class SkillTag extends Component<Props, State> {
         throw new Error('SkillTag.jobClass - Not handled class ' + this.state.job);
     };
 
+    getJobColor() {
+        switch (this.state.job) {
+            case ClassType.Gladiator:
+                return 'crimson';
+            case ClassType.Warrior:
+                return '#f86e88';
+            case ClassType.Druid:
+                return 'green';
+            case ClassType.Shaman:
+                return '#0eba7e';
+            case ClassType.Assassin:
+                return 'gold';
+            case ClassType.Hunter:
+                return 'goldenrod';
+            case ClassType.Mage:
+                return '#1686d5';
+        }
+    }
+
+    getStyles = () => {
+        const styles: SxProps = {
+            borderRadius: 1,
+            m: 0,
+            mb: 1,
+            color: 'white',
+            backgroundColor: this.getJobColor(),
+        };
+
+        return styles;
+    };
+
     constructor(props: Props) {
         super(props);
 
@@ -51,7 +84,7 @@ export class SkillTag extends Component<Props, State> {
             shortName: '',
         };
 
-        if(this.props.iri !== null){
+        if (this.props.iri !== null) {
             skillService.find(this.state.id);
         }
     }
@@ -73,7 +106,9 @@ export class SkillTag extends Component<Props, State> {
     render() {
         const classes = 'badge m-1 ' + this.jobClass();
         return this.props.iri === null
-            ? null
-            : (<span className={classes}>{this.state.shortName}</span>);
+            ? <Chip label="None" size="small"/>
+            : (<Chip sx={this.getStyles()}
+                     size="small"
+                     label={this.state.shortName}/>);
     }
 }

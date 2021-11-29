@@ -1,67 +1,56 @@
 import { Component } from 'react';
 import { zoneService } from '../zone.service';
-import { NavLink } from 'react-router-dom';
 import { Continent } from '../../models/Continent';
 import { Zone } from '../../models/Zone';
+import { Button, Card, CardContent, CardHeader, Grid } from '@mui/material';
 
 type MyProps = {
-  continent: Continent;
+    continent: Continent;
 };
 
 type MyState = {
-  zones: Zone[];
+    zones: Zone[];
 };
 
 export class ZoneListEntry extends Component<MyProps, MyState> {
-  state: MyState = {
-    zones: [],
-  };
-
-  constructor(props: MyProps) {
-    super(props);
-
-    this.state = {
-      zones: [],
+    state: MyState = {
+        zones: [],
     };
-  }
 
-  componentDidMount() {
-    zoneService
-      .findZonesForContinent(this.props.continent.resourceId)
-      .subscribe(zones => {
-        this.setState({ zones });
-      });
-  }
+    constructor(props: MyProps) {
+        super(props);
 
-  render() {
-    return (
-      <div className="card">
-        <div className="card-header">{this.props.continent.name}</div>
-        <div className="card-body">
-          {this.state.zones ? (
-            <table className="table">
-              <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Actions</th>
-              </tr>
-              </thead>
-              <tbody>
-              {this.state.zones.map((zone) => (
-                <tr key={'zone-row-'+zone.key}>
-                  <td>{zone.name}</td>
-                  <td>
-                    <NavLink className="btn btn-primary" to={`/zone/${zone.key}`}>Show</NavLink>
-                  </td>
-                </tr>
-              ))}
-              </tbody>
-            </table>
-          ) : (
-            <div>Loading</div>
-          )}
-        </div>
-      </div>
-    );
-  }
+        this.state = {
+            zones: [],
+        };
+    }
+
+    componentDidMount() {
+        zoneService
+            .findZonesForContinent(this.props.continent.resourceId)
+            .subscribe(zones => {
+                this.setState({ zones });
+            });
+    }
+
+    render() {
+        return (
+            <Card variant="outlined">
+                <CardHeader title={this.props.continent.name}/>
+                <CardContent>
+                    {this.state.zones ? (
+                        <Grid container>
+                            {this.state.zones.map((zone) => (
+                                <Grid item xs={12} key={'zone-row-' + zone.key} sx={{m:1}}>
+                                    <Button variant="contained" size="medium" href={`/zone/${zone.key}`}>
+                                        {zone.name}
+                                    </Button>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    ) : null}
+                </CardContent>
+            </Card>
+        );
+    }
 }
