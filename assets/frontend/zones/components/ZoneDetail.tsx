@@ -10,15 +10,17 @@ import {
     CardContent,
     CardHeader,
     FormControlLabel,
-    Grid, Paper,
+    Paper,
     Switch,
     Table,
     TableBody,
-    TableCell, TableContainer, TableHead, TableRow
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
 import { skillService } from '../../store/skills/skill.service';
 import { AddSetupButton } from '../../elements/AddSetupButton';
-import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 
 type LocalProps = {
     zoneKey: number;
@@ -153,7 +155,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
                     <CardHeader title={this.state.zoneName}/>
                     <CardContent>
                         <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 650}} aria-label="simple table">
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell width={50}>Stage</TableCell>

@@ -12,14 +12,14 @@ import NavBar from './components/NavBar';
 import { ColorModeContext } from './components/ColorModeSwitcher';
 
 function ZoneKeyRoute() {
-    let { zoneKey } = useParams() as any;
+    const { zoneKey } = useParams() as any;
     return (
         <ZoneDetail key={zoneKey} zoneKey={Number(zoneKey)}/>
     );
 }
 
 function BossDetailKeyRoute() {
-    let { bossId } = useParams() as any;
+    const { bossId } = useParams() as any;
     return (
         <p><BossDetail bossId={Number(bossId)}/></p>
     );

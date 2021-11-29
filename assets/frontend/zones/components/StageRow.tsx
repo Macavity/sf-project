@@ -1,13 +1,9 @@
 import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import { ElementTag } from 'assets/frontend/elements/ElementTag';
 import { ElementType } from 'assets/frontend/enums/ElementType';
 import { PartySetup } from 'assets/frontend/models/PartySetup';
-import { appQuery } from '../../store/app.query';
 import { BossRepository } from '../../bosses/boss.repository';
 import { PartySetupFactory } from '../../party-setups/party-setup.factory';
-import { EditStageButton } from '../../elements/EditStageButton';
-import { EditSetupButton } from '../../elements/EditSetupButton';
 import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
 import { Link, TableCell, TableRow } from '@mui/material';
 
@@ -67,7 +63,7 @@ export class StageRow extends Component<LocalProps, LocalState> {
     render() {
 
         return (
-            <TableRow sx={{verticalAlign: 'top'}}>
+            <TableRow sx={{ verticalAlign: 'top' }}>
                 <TableCell component="th">{this.props.stageLevel}</TableCell>
                 <TableCell>
                     <Link href={`/boss/${this.props.bossId}`}>{this.props.bossName}</Link>

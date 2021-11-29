@@ -6,7 +6,10 @@ import { continentService } from '../../continents/continent.service';
 import { zoneService } from '../zone.service';
 import { Grid } from '@mui/material';
 
-type Props = {};
+interface Props {
+
+}
+
 type State = {
     continents: Continent[];
 };

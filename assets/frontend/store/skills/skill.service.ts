@@ -45,7 +45,7 @@ export class SkillService {
     }
 
     findMany(skillIds: number[]) {
-        let missingSkills = [];
+        const missingSkills = [];
 
         for (const skillId of skillIds) {
             if (!this.skillQuery.hasEntity(skillId)) {
