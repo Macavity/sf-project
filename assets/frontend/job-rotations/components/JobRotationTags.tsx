@@ -43,7 +43,6 @@ export class JobRotationTags extends Component<Props, State> {
                 .selectEntity(this.state.id)
                 .subscribe(jobRotation => {
                     if (jobRotation) {
-                        const skillIds = JobRotationFactory.extractSkillIds(jobRotation);
                         this.setState({
                             job: extractJobIdFromResourceId(jobRotation.job),
                             skill1: jobRotation.skill1,

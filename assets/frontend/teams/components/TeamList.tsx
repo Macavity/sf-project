@@ -1,19 +1,15 @@
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { ElementTag } from '../../elements/ElementTag';
 import { CircularProgress } from '@mui/material';
 
-interface Props {}
+interface Props {
+}
+
 interface State {
     isLoading: boolean;
 }
 
-export class TeamList extends Component<Props, State>{
-    componentDidMount() {
-
-    }
-
-    render(){
+export class TeamList extends Component<Props, State> {
+    render() {
         return (
             <div className="card">
                 <div className="card-header">My Teams</div>

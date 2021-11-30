@@ -1,5 +1,4 @@
 import { ISkillDTO, Skill } from 'assets/frontend/models/Skill';
-import { ClassType } from 'assets/frontend/enums/ClassType';
 import { ApiService } from '../../services/api.service';
 import { SkillFactory } from './skill.factory';
 import { frontendState } from '../../services/fe-state.service';
@@ -8,7 +7,7 @@ export const NoSkill = new Skill(0, 0, 'None');
 
 export class SkillRepository {
     static find(id: number): Promise<Skill> {
-        if(id === 0){
+        if (id === 0) {
             return Promise.resolve(NoSkill);
         }
 
@@ -43,12 +42,12 @@ export class SkillRepository {
     static findMany(skillIds: number[]): Promise<Skill[]> {
         const queryElements = [];
         let i = 0;
-        for(const queryId of skillIds){
+        for (const queryId of skillIds) {
             queryElements.push(`id[${i}]=${queryId}`);
             i++;
         }
 
-        return ApiService.get<ISkillDTO[]>('/skills.json?'+queryElements.join('&'))
+        return ApiService.get<ISkillDTO[]>('/skills.json?' + queryElements.join('&'))
             .then(dtoArray => {
                 return SkillFactory.createArrayFromDTOs(dtoArray);
             });

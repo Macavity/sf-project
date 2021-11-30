@@ -104,7 +104,6 @@ export class SkillTag extends Component<Props, State> {
     }
 
     render() {
-        const classes = 'badge m-1 ' + this.jobClass();
         return this.props.iri === null
             ? <Chip label="None" size="small"/>
             : (<Chip sx={this.getStyles()}

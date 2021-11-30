@@ -6,11 +6,6 @@ type Props = {
   element: ElementType | null;
 }
 
-const EarthDiv = styled.div`
-  --bs-bg-opacity: 1;
-  background-color: rgb(99, 0, 15) !important;
-`;
-
 const StyledElement = styled.span`
   margin: 0 2px;
 `;
