@@ -15,6 +15,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ZoneRepository extends ServiceEntityRepository
 {
+    public function getChoices(): array
+    {
+        $entities = $this->findAll();
+
+        $choices = [];
+
+        foreach ($entities as $entity) {
+            dump($entity);
+            if($entity->name && $entity->getId()){
+                $choices[$entity->name] = $entity->getId();
+            }
+        }
+
+        return $choices;
+    }
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Zone::class);

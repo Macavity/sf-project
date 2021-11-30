@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PartySetup;
 use App\Entity\Skill;
+use App\Entity\User;
 use App\Repository\PartySetupRepository;
 use App\Repository\SkillRepository;
 use App\ValueObject\AppState;
@@ -25,9 +26,15 @@ class FrontendController extends AbstractController
     #[Route('/boss-list', name: 'bossList')]
     #[Route('/boss/{id}', name: 'bossDetail')]
     #[Route('/my-teams', name: 'myTeams')]
+    #[Route('/add-setup', name: 'addSetup')]
     public function index(): Response
     {
-        if(!$this->getUser()){
+        /**
+         * @var User|null $user
+         */
+        $user = $this->getUser();
+
+        if(!$user){
             return $this->redirectToRoute('app_login');
         }
 
@@ -46,17 +53,18 @@ class FrontendController extends AbstractController
         }
 
         $appState = new AppState(
+            $navItems,
             $this->fetchSkills(),
             $this->isGranted('ROLE_ADMIN'),
+            $user,
         );
 
         return $this->render('frontend/index.html.twig', [
-            'navItems' => $navItems,
             'state' => $appState,
         ]);
     }
 
-    private function fetchSkills()
+    private function fetchSkills(): array
     {
         $skills = $this->skillRepository->findAll();
 

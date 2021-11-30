@@ -19,6 +19,19 @@ class JobRepository extends ServiceEntityRepository
         parent::__construct($registry, Job::class);
     }
 
+    public function getJobChoices(): array
+    {
+        $jobs = $this->findAll();
+
+        $choices = [];
+
+        foreach ($jobs as $job) {
+            $choices[$job->name] = $job;
+        }
+
+        return $choices;
+    }
+
     // /**
     //  * @return Job[] Returns an array of Job objects
     //  */
