@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  linting:
     runs-on: ubuntu-latest
 
     strategy:
