@@ -1,4 +1,4 @@
-name: 🚀 Deploy to Production
+name: 🚀 Deploy to Production (FE)
 
 on:
   push:
@@ -41,9 +41,15 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
-            **/node_modules/**
+            **/bin/**
             **/assets/**
+            **/node_modules/**
+            **/public/bundles/**
+            **/src/**
+            **/templates/**
             **/tests/**
+            **/translations/**
             **/var/**
+            **/vendor/**
             .env
             .env.*
