@@ -21,11 +21,11 @@ export class Boss {
         this.rotationList.addRotation(rotation);
     }
 
-    public routeToBoss(): any {
+    public routeToBoss(): object {
         return {
             name: 'BossDetail',
             params: {
-                bossName: BossType[this.key],
+                bossName: BossType[this.id],
             },
         };
     }

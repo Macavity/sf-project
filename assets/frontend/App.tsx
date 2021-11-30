@@ -14,14 +14,14 @@ import { ColorModeContext } from './components/ColorModeSwitcher';
 declare let window: Window;
 
 function ZoneKeyRoute() {
-    const { zoneKey } = useParams() as any;
+    const { zoneKey } = useParams<{ zoneKey: string }>();
     return (
         <ZoneDetail key={zoneKey} zoneKey={Number(zoneKey)}/>
     );
 }
 
 function BossDetailKeyRoute() {
-    const { bossId } = useParams() as any;
+    const { bossId } = useParams<{ bossId: string }>();
     return (
         <p><BossDetail bossId={Number(bossId)}/></p>
     );
@@ -64,13 +64,13 @@ export default function ToggleColorMode() {
                     const $body = window.document.getElementById('body');
 
                     if (prevMode === 'light') {
-                        if($body){
+                        if ($body) {
                             $body.classList.add('dark');
                         }
 
                         return 'dark';
                     } else {
-                        if($body){
+                        if ($body) {
                             $body.classList.remove('dark');
                         }
 
