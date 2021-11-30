@@ -7,9 +7,11 @@ import { BossList } from './bosses/components/BossList';
 import { BossDetail } from './bosses/components/BossDetail';
 import { TeamList } from './teams/components/TeamList';
 import { AddPartySetupForm } from './party-setups/components/AddPartySetupForm';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
 import NavBar from './components/NavBar';
 import { ColorModeContext } from './components/ColorModeSwitcher';
+
+declare let window: Window;
 
 function ZoneKeyRoute() {
     const { zoneKey } = useParams() as any;
@@ -54,19 +56,23 @@ function AppRouter() {
 }
 
 export default function ToggleColorMode() {
-    const [mode, setMode] = React.useState('light');
+    const [mode, setMode] = React.useState('light' as PaletteMode);
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
                 setMode((prevMode) => {
-                    const $body = document.getElementById('body')!;
+                    const $body = window.document.getElementById('body');
 
                     if (prevMode === 'light') {
-                        $body.classList.add('dark');
+                        if($body){
+                            $body.classList.add('dark');
+                        }
 
                         return 'dark';
                     } else {
-                        $body.classList.remove('dark');
+                        if($body){
+                            $body.classList.remove('dark');
+                        }
 
                         return 'light';
                     }
@@ -80,7 +86,6 @@ export default function ToggleColorMode() {
         () =>
             createTheme({
                 palette: {
-                    // @ts-ignore
                     mode,
                 },
             }),

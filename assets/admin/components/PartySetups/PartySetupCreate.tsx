@@ -13,20 +13,18 @@ import {
     TextField,
 } from 'react-admin';
 import React from 'react';
-import { sortByName, sortBySlug, sortZone, validateRequired } from './index';
+import { sortByName, sortBySlug, validateRequired } from './index';
 import { Grid } from '@mui/material';
-import { ClassType } from '../../enums/ClassType';
 import {
     filterAssassin,
     filterDruid,
     filterGladiator,
     filterHunter,
-    filterMage, filterShaman,
+    filterMage,
+    filterShaman,
     filterWarlock,
     filterWarrior
 } from '../Jobs';
-
-
 
 
 const tabs = [
@@ -55,14 +53,6 @@ const tabs = [
         ],
     },
 ];
-//
-// const PartySetupActions = ({ basePath, data, resource }: ToolbarProps) => (
-//   <TopToolbar>
-//     <ShowButton basePath={basePath} record={data} />
-//     {/* Add your custom actions */}
-//     <Button color="primary" onClick={customAction}>Custom Action</Button>
-//   </TopToolbar>
-// );
 
 export const PartySetupShow = (props: any) => (
     <Show {...props}>
@@ -106,11 +96,11 @@ export const PartySetupCreate = (props: any) => {
                     </ReferenceInput>
                     <NumberInput source="stageLevel" validate={validateRequired}/>
                 </FormTab>
-                {tabs.map(({ label, jobs }) => (
-                    <FormTab label={label}>
+                {tabs.map(({ label, jobs }, i) => (
+                    <FormTab label={label} key={'form-' + i}>
                         <Grid container spacing={2}>
-                            {jobs.map(({ label, attrPrefix, filter }) => (
-                                <Grid item xs={6}>
+                            {jobs.map(({ label, attrPrefix, filter }, j) => (
+                                <Grid item xs={6} key={'grid-' + j}>
                                     <h2>{label}</h2>
                                     <ReferenceInput label={label}
                                                     source={`${attrPrefix}Rotation`}
@@ -132,7 +122,7 @@ export const PartySetupCreate = (props: any) => {
 
 //export const SkillSelectInput =
 
-export const PartySetupEdit = (props: any, record: object) => (
+export const PartySetupEdit = (props: any) => (
     <Edit {...props}>
         <TabbedForm redirect="list">
             <FormTab label="Summary">
@@ -154,10 +144,10 @@ export const PartySetupEdit = (props: any, record: object) => (
                 <NumberInput source="stageLevel" validate={validateRequired}/>
             </FormTab>
             {tabs.map(({ label, jobs }, j) => (
-                <FormTab label={label} key={'form-'+j}>
+                <FormTab label={label} key={'form-' + j}>
                     <Grid container spacing={2}>
                         {jobs.map(({ label, attrPrefix, filter }, i) => (
-                            <Grid key={'jobs-'+i} item xs={6}>
+                            <Grid key={'jobs-' + i} item xs={6}>
                                 <h2>{label}</h2>
                                 <ReferenceInput label={label}
                                                 source={`${attrPrefix}Rotation`}

@@ -5,8 +5,8 @@ import * as React from 'react';
 import { useTheme } from '@mui/material';
 
 export const ColorModeContext = React.createContext({
-    toggleColorMode: () => {
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    toggleColorMode: () => {},
 });
 
 export function ColorModeSwitcher() {

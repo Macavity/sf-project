@@ -14,8 +14,6 @@ import {
     TextField,
     TextInput,
 } from 'react-admin';
-// @ts-ignore
-import { CreateGuesser } from '@api-platform/admin';
 import { sortByName } from '../PartySetups';
 
 const validateRequired = required();
@@ -32,17 +30,18 @@ const enableChoices = (params: any) => {
 };
 
 const filters = [
-    <ReferenceInput reference="jobs" source="job" label="Job" alwaysOn>
+    <ReferenceInput reference="jobs" source="job" label="Job" key="filter-j" alwaysOn>
         <SelectInput value="name"/>
     </ReferenceInput>,
     <ReferenceInput reference="skills"
+                    key="filter-s"
                     source="skill1"
                     label="Skill 1"
                     perPage={200}
                     alwaysOn>
         <SelectInput value="label"/>
     </ReferenceInput>,
-    <ReferenceInput reference="skills" source="skill2" label="Skill 2">
+    <ReferenceInput reference="skills" key="filter-s2" source="skill2" label="Skill 2">
         <SelectInput value="label"/>
     </ReferenceInput>,
 ];

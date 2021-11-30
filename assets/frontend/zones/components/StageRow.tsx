@@ -22,12 +22,6 @@ type LocalState = {
     stagePartySetups: PartySetup[];
 }
 
-const FETCH_STAGE = `
-query FetchStage($id: ) {
-    stage(id:"")
-}
-`;
-
 export class StageRow extends Component<LocalProps, LocalState> {
     state = {
         stagePartySetups: [] as PartySetup[],
