@@ -2,7 +2,7 @@ import { ClassType } from '../enums/ClassType';
 import { SkillType } from '../models/Skill';
 import { SkillReference } from '../models/skill-reference';
 import { SkillRotation } from '../models/skill-rotation';
-import { IJobSkills } from '../zones/dto/stage-party-setup.dto';
+import { IJobSkills } from '../interfaces/IJobSkills';
 
 export class SkillRotationFactory {
   static createFromSkillTypes(

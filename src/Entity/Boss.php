@@ -2,24 +2,40 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\API\Boss\GetPartySetupsForBoss;
 use App\Controller\API\Boss\GetPartySetupsForBossInZone;
 use App\Enum\Element;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\CascadingStrategy;
 
 #[ORM\Entity]
-#[ApiResource(itemOperations: [
-    'get',
-    'get_party_setups' => [
-        'method' => 'GET',
-        'path' => '/bosses/{id}/party_setups.{_format}',
-        'controller' => GetPartySetupsForBossInZone::class,
+#[ApiResource(
+    itemOperations: [
+        'get',
+        'get_party_setups_for_zone' => [
+            'method' => 'GET',
+            'path' => '/bosses/{id}/zone/{zoneId}/party_setups.{_format}',
+            'controller' => GetPartySetupsForBossInZone::class,
+        ],
+//        'get_party_setups' => [
+//            'method' => 'GET',
+//            'path' => '/bosses/{id}/party_setups.{_format}',
+//            'controller' => GetPartySetupsForBoss::class,
+//        ],
     ],
-])]
+    attributes: [
+        "pagination_items_per_page" => 100
+    ],
+    order: ['name' => 'ASC']
+)]
+#[ApiFilter(SearchFilter::class, properties: ['name' => SearchFilterInterface::STRATEGY_PARTIAL])]
 class Boss
 {
     #[ORM\Id]
@@ -41,11 +57,12 @@ class Boss
     #[Groups(['stage-list'])]
     public int $secondaryElement = Element::NONE;
 
-    #[ORM\OneToMany(mappedBy: 'boss', targetEntity: Stage::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'boss', targetEntity: Stage::class, cascade: ['persist'])]
     /** @var Stage[] */
     public iterable $stages;
 
-    #[ORM\OneToMany(targetEntity: PartySetup::class, mappedBy: 'boss', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: PartySetup::class, mappedBy: 'boss', cascade: ['persist'])]
+    #[ApiSubresource]
     /** @var PartySetup[] */
     public iterable $partySetups;
 

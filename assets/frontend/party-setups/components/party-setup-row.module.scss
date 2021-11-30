@@ -1,0 +1,9 @@
+
+.stage-party-setup {
+    display: flex;
+
+    &__skills {
+        display:flex;
+        flex-direction: row;
+    }
+}

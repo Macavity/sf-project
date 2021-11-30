@@ -1,4 +1,4 @@
-import { PartySetupList, StagePartySetup } from 'assets/frontend/models/StagePartySetup';
+import { PartySetupList, PartySetup } from 'assets/frontend/models/PartySetup';
 import { GladiatorSkill } from 'assets/frontend/models/Gladiator';
 import { DruidSkill } from 'assets/frontend/models/Druid';
 import { HunterSkill } from 'assets/frontend/models/Hunter';
@@ -28,7 +28,7 @@ export class Boss {
     return this.id;
   }
 
-  public addRotation(rotation: StagePartySetup) {
+  public addRotation(rotation: PartySetup) {
     this.rotationList.addRotation(rotation);
   }
 

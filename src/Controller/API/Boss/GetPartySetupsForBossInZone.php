@@ -2,6 +2,7 @@
 
 namespace App\Controller\API\Boss;
 
+use App\Entity\PartySetup;
 use App\Repository\BossRepository;
 use App\Repository\PartySetupRepository;
 use App\Repository\ZoneRepository;
@@ -21,15 +22,16 @@ class GetPartySetupsForBossInZone extends AbstractController
      * @throws Exception
      */
     public function __invoke(
-        int                  $id,
-        Request              $request,
-        BossRepository       $bossRepository,
+        int $id,
+        int $zoneId,
+        Request $request,
+        BossRepository $bossRepository,
         PartySetupRepository $partySetupRepository,
-        ZoneRepository       $zoneRepository,
-        LoggerInterface      $logger,
+        ZoneRepository $zoneRepository,
+        LoggerInterface $logger,
     ) {
         $requestedLevel = (int) $request->get('level', null);
-        $requestedZone = (int) $request->get('zone', null);
+        $requestedZone = $zoneId;
 
         if (!$requestedLevel || !$requestedZone) {
             throw new BadRequestException();
@@ -60,17 +62,17 @@ class GetPartySetupsForBossInZone extends AbstractController
         $zone = $zoneRepository->find($requestedZone);
         $targetScore = $zone->scoreStart + $requestedLevel;
 
-        /** @var PersistentCollection $partySetups */
-        $partySetups = $boss->partySetups;
+        /** @var PartySetup[] $partySetups */
+        $partySetups = $boss->partySetups->toArray();
 
-        foreach (array_reverse($partySetups->toArray()) as $rotation) {
-            if (!$rotation->zone) {
+        foreach (array_reverse($partySetups) as $rotation) {
+            if (!$rotation->getZone()) {
                 throw new Exception('Missing zoneId in rotation: ' . $rotation->getId(), 500);
             }
 
             $rotationScore = $rotation->getScore();
 
-            if($rotationScore <= $targetScore){
+            if ($rotationScore <= $targetScore) {
                 return [$rotation];
             }
         }

@@ -1,16 +1,29 @@
 import { Component } from 'react';
 import { Stage } from '../../models/Stage';
 import { StageRow } from './StageRow';
-import { AreaKey } from '../../enums/AreaKey';
 import { zoneQuery } from '../zone.query';
 import { StageRepository } from '../stage.repository';
 import { zoneService } from '../zone.service';
 import { appQuery } from '../../store/app.query';
-import { Button, FormControlLabel, Switch } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    FormControlLabel,
+    Paper,
+    Switch,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from '@mui/material';
 import { skillService } from '../../store/skills/skill.service';
+import { AddSetupButton } from '../../elements/AddSetupButton';
 
 type LocalProps = {
-    zoneKey: AreaKey;
+    zoneKey: number;
 }
 
 type LocalState = {
@@ -22,6 +35,8 @@ type LocalState = {
     isAdmin: boolean;
     onlyLast: boolean;
 }
+
+const sortByLevel = (a: Stage, b: Stage) => (a.level > b.level) ? 1 : -1;
 
 export class ZoneDetail extends Component<LocalProps, LocalState> {
     constructor(props: LocalProps) {
@@ -43,13 +58,17 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
 
     componentDidMount() {
         if (this.props.zoneKey > 0) {
+
+
             StageRepository.findByZone(this.props.zoneKey)
                 .then(stages => {
                     console.log('Stages loaded', stages);
+
                     this.setState({
-                        allStages: stages,
+                        allStages: stages.sort(sortByLevel),
                         filteredStages: this.filteredStages(stages),
                     });
+
                     this.setState({
                         stages: this.shownStages(),
                     });
@@ -83,7 +102,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
             }
         }
 
-        return reduced.reverse();
+        return reduced.sort(sortByLevel);
     }
 
     shownStages() {
@@ -102,6 +121,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
         if (this.state.stages.length) {
             return null;
         }
+
         return (
             <tr>
                 <td colSpan={this.colSpan()}>No Data saved yet.</td>
@@ -123,7 +143,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
             <div>
                 <FormControlLabel control={<Switch checked={this.state.onlyLast} onClick={this.toggleFilter}/>}
                                   label="Show only last occurrences"/>
-                <Button href="/admin#/party_setups/create" variant="contained">Add Setup</Button>
+                <AddSetupButton/>
             </div>
         );
     }
@@ -131,39 +151,39 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
     render() {
         return (
             <div className="container-fluid">
-                <div className="card">
-                    <div className="card-header">{this.state.zoneName}</div>
-                    <div className="card-body">
-                        {this.getAdminActions()}
-                        <table className="table table-hover table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">Stage</th>
-                                <th scope="col">Boss</th>
-                                <th scope="col" colSpan={2}>Pet Elements</th>
-                                <th scope="col" colSpan={4}>Party</th>
-                                {this.state.isAdmin && (<th scope="col">Admin</th>)}
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {this.getEmptyRow()}
-                            {this.shownStages().map(stage => {
-                                return (
-                                    <StageRow key={stage.level}
-                                              stageId={stage.id}
-                                              stageLevel={stage.level}
-                                              zoneId={stage.areaKey}
-                                              bossName={stage.boss.name}
-                                              bossId={stage.boss.id}
-                                              primaryCounterElement={stage.boss.primaryCounter}
-                                              secondaryCounterElement={stage.boss.secondaryCounter}
-                                    />
-                                );
-                            })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <Card>
+                    <CardHeader title={this.state.zoneName}/>
+                    <CardContent>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell width={50}>Stage</TableCell>
+                                        <TableCell width={100}>Boss</TableCell>
+                                        <TableCell width={50} colSpan={2}>Pet Elements</TableCell>
+                                        <TableCell colSpan={4} align="left">Party</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.getEmptyRow()}
+                                    {this.shownStages().map(stage => {
+                                        return (
+                                            <StageRow key={stage.level}
+                                                      stageId={stage.id}
+                                                      stageLevel={stage.level}
+                                                      zoneId={stage.areaKey}
+                                                      bossName={stage.boss.name}
+                                                      bossId={stage.boss.id}
+                                                      primaryCounterElement={stage.boss.primaryCounter}
+                                                      secondaryCounterElement={stage.boss.secondaryCounter}
+                                            />
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </CardContent>
+                </Card>
             </div>
         );
     }

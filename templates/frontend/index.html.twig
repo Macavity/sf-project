@@ -10,6 +10,7 @@
 {% block javascripts %}
   {{ parent() }}
   {{ encore_entry_script_tags('frontend') }}
+  <script id="appstate" type="application/json">{{ state|json_encode|raw }}</script>
 {% endblock %}
 
 {% block body %}

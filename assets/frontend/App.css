@@ -38,7 +38,7 @@
 }
 
 .table-hover > tbody > tr:hover {
-  --bs-table-accent-bg: #74ea6f;
+  background-color: #74ea6f;
 }
 
 .stage-party-setup {

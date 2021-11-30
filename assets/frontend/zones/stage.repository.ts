@@ -13,7 +13,7 @@ export class StageRepository {
 
 
         return ApiService
-            .get<StageDTO[]>(`/stages.json?zone.id=${areaId}`)
+            .get<StageDTO[]>(`/stages.json?zone=${areaId}`)
             .then((response: StageDTO[]) => {
                 return response.map((dto: StageDTO) => {
                     return StageFactory.createFromDTO(dto, areaId);

@@ -2,6 +2,7 @@
 
 namespace App\Enum;
 
+use Exception;
 use ReflectionClass;
 use ReflectionException;
 
@@ -56,5 +57,17 @@ abstract class BasicEnum
         } catch (ReflectionException $e) {
             return false;
         }
+    }
+
+    public static function getEnumByKey($compareValue)
+    {
+        $values = self::getConstants();
+        foreach($values as $key => $value){
+            if($value === $compareValue){
+                return $value;
+            }
+        }
+
+        throw new Exception('Unrecognized key.');
     }
 }

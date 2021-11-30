@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Mapping\CascadingStrategy;
 
 #[ApiResource(normalizationContext: ['groups' => 'stage-list'])]
 #[ORM\Entity]
-#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'zone.id' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'zone' => 'exact'])]
 class Stage
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
@@ -26,6 +26,7 @@ class Stage
     public int $level;
 
     #[ORM\ManyToOne(inversedBy: 'stages')]
+    #[Groups(['stage-list'])]
     public Zone $zone;
 
     #[ORM\ManyToOne(inversedBy: 'stages')]
