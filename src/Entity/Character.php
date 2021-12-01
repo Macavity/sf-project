@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -12,17 +12,17 @@ class Character
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
+
+    #[ORM\Column(type: 'string')]
+    private string $name;
 
     #[ORM\ManyToOne(targetEntity: Job::class, inversedBy: 'characters')]
     #[ORM\JoinColumn(nullable: false)]
-    private $job;
-
-    #[ORM\Column(type: 'integer')]
-    private $level;
+    private Job $job;
 
     #[ORM\ManyToOne(targetEntity: Party::class, inversedBy: 'members')]
-    private $party;
+    private Party $party;
 
     public function getId(): ?int
     {
@@ -41,18 +41,6 @@ class Character
         return $this;
     }
 
-    public function getLevel(): ?int
-    {
-        return $this->level;
-    }
-
-    public function setLevel(int $level): self
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
     public function getParty(): ?Party
     {
         return $this->party;
@@ -63,5 +51,16 @@ class Character
         $this->party = $party;
 
         return $this;
+    }
+
+    public function setName(string $name): Character
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

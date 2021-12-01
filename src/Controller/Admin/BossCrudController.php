@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Boss;
+use App\Repository\ElementRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
@@ -12,6 +13,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class BossCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private ElementRepository $elementRepository
+    ) { }
+
     public static function getEntityFqcn(): string
     {
         return Boss::class;
@@ -26,19 +31,13 @@ class BossCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $primary = ChoiceField::new('primaryElement')->setChoices([
-            0 => 'None',
-            1 => 'Fire',
-            2 => 'Lightning',
-            3 => 'Frost',
-            4 => 'Earth',
-        ]);
+        $elements = $this->elementRepository->getElementChoices();
 
         return [
-            IdField::new('id'),
+            // IdField::new('id'),
             TextField::new('name'),
-            $primary,
-            ArrayField::new('secondaryElement'),
+            ChoiceField::new('primaryElement')->setChoices($elements),
+            ChoiceField::new('secondaryElement')->setChoices($elements),
         ];
     }
 }
