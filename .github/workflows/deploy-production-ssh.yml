@@ -37,12 +37,14 @@ jobs:
 
       - name: Create .env
         uses: iamsauravsharma/create-dotenv@v1.2.0
+        with:
+          env-prefix: 'ENV_KEY_'
         env:
-          APP_ENV: prod
-          APP_SECRET: ${{ secrets.ENV_APP_SECRET }}
-          ADMIN_URL: ${{ secrets.ENV_ADMIN_URL }}
-          DATABASE_URL: ${{ secrets.ENV_DATABASE_URL }}
-          CORS_ALLOW_ORIGIN: ${{ secrets.ENV_CORS_ALLOW_ORIGIN }}
+          ENV_KEY_APP_ENV: prod
+          ENV_KEY_APP_SECRET: ${{ secrets.ENV_APP_SECRET }}
+          ENV_KEY_ADMIN_URL: ${{ secrets.ENV_ADMIN_URL }}
+          ENV_KEY_DATABASE_URL: ${{ secrets.ENV_DATABASE_URL }}
+          ENV_KEY_CORS_ALLOW_ORIGIN: ${{ secrets.ENV_CORS_ALLOW_ORIGIN }}
 
       #
       # Deployment
