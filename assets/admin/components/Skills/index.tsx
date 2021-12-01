@@ -17,24 +17,12 @@ import {
     TextField,
     TextInput,
 } from 'react-admin';
-import { ClassType } from '../../enums/ClassType';
 import BookIcon from '@material-ui/icons/Book';
 
 const validateRequired = required();
 
-const jobChoices = [
-    { id: ClassType.Gladiator, name: 'Gladiator' },
-    { id: ClassType.Druid, name: 'Druid' },
-    { id: ClassType.Warrior, name: 'Warrior' },
-    { id: ClassType.Shaman, name: 'Shaman' },
-    { id: ClassType.Mage, name: 'Mage' },
-    { id: ClassType.Hunter, name: 'Hunter' },
-    { id: ClassType.Assassin, name: 'Assassin' },
-    { id: ClassType.Warlock, name: 'Warlock' },
-];
-
 const filters = [
-    <ReferenceInput reference="jobs" source="job" label="Job" alwaysOn>
+    <ReferenceInput reference="jobs" source="job" label="Job" key="filter-j" alwaysOn>
         <SelectInput value="name"/>
     </ReferenceInput>
 ];

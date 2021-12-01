@@ -16,9 +16,6 @@ import {
     SimpleForm,
     SimpleShowLayout,
     TextField,
-    useNotify,
-    useRedirect,
-    useRefresh,
 } from 'react-admin';
 import { StageCreateToolbar } from './StageCreateToolbar';
 
@@ -38,10 +35,10 @@ const filterByName = (searchText: any) => {
 };
 
 const stageFilters = [
-    <ReferenceInput label="Continent" source="continent" reference="continents">
+    <ReferenceInput label="Continent" source="continent" reference="continents" key="filter-c">
         <SelectInput optionText="name"/>
     </ReferenceInput>,
-    <ReferenceInput label="Zone" source="zone" reference="zones" alwaysOn>
+    <ReferenceInput label="Zone" source="zone" reference="zones" key="filter-z" alwaysOn>
         <SelectInput optionText="name"/>
     </ReferenceInput>,
 ];
@@ -74,16 +71,7 @@ export const StageShow = (props: any) => (
 
 export const StageCreate = (props: any) => {
     const sortZone = { field: 'scoreStart', order: 'ASC' };
-    const notify = useNotify();
-    const refresh = useRefresh();
-    const redirect = useRedirect();
-    const onSuccess = () => {
-        notify(`Changes saved`);
-        redirect('/stages/');
-        refresh();
-    };
 
-    // @ts-ignore
     return (
         <Create {...props}>
             <SimpleForm toolbar={<StageCreateToolbar/>}>

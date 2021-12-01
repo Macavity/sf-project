@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import { ElementTag } from 'assets/frontend/elements/ElementTag';
 import { ElementType } from 'assets/frontend/enums/ElementType';
 import { PartySetup } from 'assets/frontend/models/PartySetup';

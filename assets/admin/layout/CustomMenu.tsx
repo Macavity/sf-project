@@ -2,7 +2,7 @@ import { MenuItemLink, UserMenu } from 'react-admin';
 import { forwardRef } from 'react';
 import { ExitToApp } from '@mui/icons-material';
 
-const ConfigurationMenu = forwardRef(({ children }, ref) => (
+const ConfigurationMenu = forwardRef(({ }, ref) => (
     <MenuItemLink
         ref={ref}
         to="/admin"
@@ -10,6 +10,7 @@ const ConfigurationMenu = forwardRef(({ children }, ref) => (
         leftIcon={<ExitToApp />}
     />
 ));
+ConfigurationMenu.displayName = 'ConfigurationMenu';
 
 const CustomMenu = (props:any) => (
     <UserMenu {...props}>
