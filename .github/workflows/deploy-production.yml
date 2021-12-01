@@ -1,4 +1,4 @@
-name: 🚀 Deploy to Production (FE)
+name: 🚀 Deploy only JS to Production
 
 on:
   push:
