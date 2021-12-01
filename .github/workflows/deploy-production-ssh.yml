@@ -84,4 +84,7 @@ jobs:
                     host: ${{ secrets.SSH_HOST }}
                     username: ${{ secrets.SSH_USER }}
                     key: ${{ secrets.SSH_PRIVATE_KEY }}
-                    script: cd ${{ secrets.SSH_PATH }} && php80 bin/console cache:clear
+                    script: |
+                        cd ${{ secrets.SSH_PATH }}
+                        php80 bin/console cache:clear --env=dev
+                        php80 bin/console cache:clear --env=prod
