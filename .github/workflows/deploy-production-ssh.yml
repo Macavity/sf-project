@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy-prod:
     runs-on: ubuntu-latest
     environment: production
 
@@ -35,12 +35,20 @@ jobs:
       - name: Remove var
         run: rm -rf var
 
-  deployment:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: production
+      - name: Create .env
+        uses: iamsauravsharma/create-dotenv@v1.2.0
+        with:
+          env-prefix: 'ENV_KEY_'
+        env:
+          ENV_KEY_APP_ENV: prod
+          ENV_KEY_APP_SECRET: ${{ secrets.ENV_APP_SECRET }}
+          ENV_KEY_ADMIN_URL: ${{ secrets.ENV_ADMIN_URL }}
+          ENV_KEY_DATABASE_URL: ${{ secrets.ENV_DATABASE_URL }}
+          ENV_KEY_CORS_ALLOW_ORIGIN: ${{ secrets.ENV_CORS_ALLOW_ORIGIN }}
 
-    steps:
+      #
+      # Deployment
+      #
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
@@ -54,4 +62,4 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: rsync -avzn ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PATH }}
+        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PATH }}
