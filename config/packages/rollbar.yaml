@@ -1,0 +1,4 @@
+rollbar:
+    enabled: true
+    access_token: "%rollbar_token%"
+    environment: 'production'

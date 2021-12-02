@@ -200,6 +200,12 @@
     "psr/log": {
         "version": "2.0.0"
     },
+    "rollbar/rollbar": {
+        "version": "v2.1.0"
+    },
+    "rollbar/rollbar-php-symfony-bundle": {
+        "version": "v4.0.0"
+    },
     "sebastian/cli-parser": {
         "version": "1.0.1"
     },
