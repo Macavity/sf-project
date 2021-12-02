@@ -11,14 +11,12 @@ export class SkillService {
     }
 
     initSkills() {
-        //console.log('Init Skills');
+        console.debug('Initialize all Skills');
         this.skillStore.setLoading(true);
 
         SkillRepository.findAll().then(skillsByJob => {
             this.skillStore.set(skillsByJob);
-
-            //console.log('Set Skills', skillsByJob);
-
+            console.debug('✅ Initialized all Skills');
             this.skillStore.setLoading(false);
         });
     }
@@ -59,7 +57,7 @@ export class SkillService {
                 .then(skills => {
                     for (const skill of skills) {
                         this.skillStore.add(skill);
-                        console.debug('=> Added',skill);
+                        console.debug('=> Added', skill);
                     }
                     console.groupEnd();
                 });
