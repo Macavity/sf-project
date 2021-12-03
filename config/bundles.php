@@ -17,6 +17,5 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
     EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle::class => ['all' => true],
-    Rollbar\Symfony\RollbarBundle\RollbarBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
 ];

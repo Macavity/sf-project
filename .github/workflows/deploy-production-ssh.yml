@@ -45,7 +45,6 @@ jobs:
                     ENV_KEY_ADMIN_URL: ${{ secrets.ENV_ADMIN_URL }}
                     ENV_KEY_DATABASE_URL: ${{ secrets.ENV_DATABASE_URL }}
                     ENV_KEY_CORS_ALLOW_ORIGIN: ${{ secrets.ENV_CORS_ALLOW_ORIGIN }}
-                    ENV_KEY_ROLLBAR_TOKEN: ${{ secrets.ROLLBAR_TOKEN }}
                     ENV_KEY_SENTRY_FRONTEND: ${{ secrets.SENTRY_FRONTEND }}
                     ENV_KEY_SENTRY_BACKEND: ${{ secrets.SENTRY_BACKEND }}
 
