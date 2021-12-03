@@ -33,10 +33,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $email;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
+//    #[ORM\Column(type: 'boolean')]
+//    private $isVerified = false;
+
+    public function __toString(): string
+    {
+        return $this->getUserIdentifier();
+    }
+
 
     public function getId(): ?int
     {
