@@ -17,7 +17,7 @@ export function editSetupURL(setupId: number) {
 }
 
 export function addSetupURL() {
-    return ADMIN_URL + '#/party_setups/create';
+    return '/add-setup';
 }
 
 export function addStageURL() {

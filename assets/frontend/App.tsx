@@ -6,7 +6,7 @@ import { ZoneDetail } from './zones/components/ZoneDetail';
 import { BossList } from './bosses/components/BossList';
 import { BossDetail } from './bosses/components/BossDetail';
 import { TeamList } from './teams/components/TeamList';
-import { AddPartySetupForm } from './party-setups/components/AddPartySetupForm';
+import AddPartySetupForm from './party-setups/components/AddPartySetupForm';
 import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
 import NavBar from './components/NavBar';
 import { ColorModeContext } from './components/ColorModeSwitcher';

@@ -1,23 +1,49 @@
-import { Box, Tab, Tabs } from '@mui/material';
-import { Component } from 'react';
+import React from 'react';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { bossService } from '../../bosses/boss.service';
+import { bossQuery } from '../../bosses/boss.query';
+import { Boss } from '../../models/Boss';
 
-interface LocalProps {}
+const allBosses = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+];
 
-interface LocalState {
+interface Props {
 
 }
 
-export class AddPartySetupForm extends Component<LocalProps, LocalState> {
+interface State {
+    bosses: Boss[],
+}
+
+export class AddPartySetupForm extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+
+        bossService.initBosses();
+    }
+
+    componentDidMount() {
+        bossQuery.selectAll().subscribe(bosses => {
+            if (bosses && bosses.length) {
+                this.setState({
+                    bosses,
+                });
+            }
+        });
+    }
+
     render() {
         return (
             <div className="add-setup-form">
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs>
-                        <Tab label="General" />
-                        <Tab label="Item Two" />
-                        <Tab label="Item Three" />
-                    </Tabs>
-                </Box>
+                <Autocomplete
+                    disablePortal
+                    options={allBosses}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="Boss"/>}
+                />
             </div>
         );
     }

@@ -43,6 +43,12 @@ class Zone
     #[ORM\Column]
     public int $scoreStart = 0;
 
+    #[ORM\Column]
+    public int $stageCount = 1000;
+
+    #[ORM\Column]
+    public bool $isMystic = false;
+
     #[ORM\ManyToOne(inversedBy: 'zones')]
     public ?Continent $continent = null;
 

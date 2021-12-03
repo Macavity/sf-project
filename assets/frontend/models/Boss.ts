@@ -12,15 +12,6 @@ export class Boss {
     ) {
     }
 
-    /** @deprecated */
-    get key() {
-        return this.id;
-    }
-
-    public addRotation(rotation: PartySetup) {
-        this.rotationList.addRotation(rotation);
-    }
-
     public routeToBoss(): object {
         return {
             name: 'BossDetail',
@@ -44,19 +35,6 @@ export class Boss {
         }
 
         return null;
-    }
-
-    public counterElements(): ElementType[] {
-        const counters = [];
-
-        if (this.primaryElement) {
-            counters.push(Boss.getCounterToElement(this.primaryElement));
-        }
-        if (this.secondaryElement) {
-            counters.push(Boss.getCounterToElement(this.secondaryElement));
-        }
-
-        return counters;
     }
 
     private static getCounterToElement(element: ElementType): ElementType {

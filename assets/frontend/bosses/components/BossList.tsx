@@ -63,6 +63,7 @@ export class BossList extends Component<Props, State> {
                                 <CircularProgress/>
                             </Container>
                         ) : (
+
                             <Table>
                                 <TableHead>
                                     <TableRow>
