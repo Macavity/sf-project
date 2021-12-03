@@ -40,6 +40,9 @@ class Zone
     #[ORM\Column(options: ['default' => 0])]
     public ?int $position = null;
 
+    #[ORM\Column(options: ['default' => 120])]
+    public int $stageCount = 0;
+
     #[ORM\Column]
     public int $scoreStart = 0;
 

@@ -29,6 +29,9 @@ class CharacterCrudController extends AbstractCrudController
 //            IdField::new('id'),
             TextField::new('name'),
             AssociationField::new('job'),
+            AssociationField::new('season'),
+            AssociationField::new('owner'),
+            AssociationField::new('createdBy'),
         ];
     }
 }

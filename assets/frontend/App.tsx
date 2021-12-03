@@ -5,7 +5,7 @@ import { ZoneList } from './zones/components/ZoneList';
 import { ZoneDetail } from './zones/components/ZoneDetail';
 import { BossList } from './bosses/components/BossList';
 import { BossDetail } from './bosses/components/BossDetail';
-import { TeamList } from './teams/components/TeamList';
+import { CharacterList } from './teams/components/CharacterList';
 import { AddPartySetupForm } from './party-setups/components/AddPartySetupForm';
 import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
 import NavBar from './components/NavBar';
@@ -44,8 +44,8 @@ function AppRouter() {
                 <Route path="/boss/:bossId">
                     <BossDetailKeyRoute/>
                 </Route>
-                <Route path="/my-teams">
-                    <TeamList/>
+                <Route path="/my-characters">
+                    <CharacterList/>
                 </Route>
                 <Route path="/add-setup">
                     <AddPartySetupForm/>

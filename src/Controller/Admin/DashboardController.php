@@ -4,10 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Entity\Boss;
 use App\Entity\Character;
+use App\Entity\CharacterCombatPower;
 use App\Entity\Continent;
 use App\Entity\Job;
 use App\Entity\JobRotation;
 use App\Entity\PartySetup;
+use App\Entity\Progress;
+use App\Entity\Region;
+use App\Entity\Season;
 use App\Entity\Skill;
 use App\Entity\Stage;
 use App\Entity\Team;
@@ -35,7 +39,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToRoute('Homepage', 'fa fa-home', 'home');
+        yield MenuItem::linkToUrl('Homepage', 'fa fa-home', '/');
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-chart-line');
         yield MenuItem::linkToRoute('React Admin', 'fab fa-react', 'react_admin');
 
@@ -51,9 +55,17 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Skill', 'fa fa-user-cog', Skill::class);
         yield MenuItem::linkToCrud('Skill Rotation', 'fa fa-users-cog', JobRotation::class);
 
-        yield MenuItem::section('Teams');
+        yield MenuItem::section('Characters');
         yield MenuItem::linkToCrud('Characters', 'fa fa-user', Character::class);
         yield MenuItem::linkToCrud('Teams', 'fa fa-users', Team::class);
+
+        yield MenuItem::section('Servers');
+        yield MenuItem::linkToCrud('Regions', 'fa fa-list', Region::class);
+        yield MenuItem::linkToCrud('Seasons', 'fa fa-list', Season::class);
+
+        yield MenuItem::section('Statistics');
+        yield MenuItem::linkToCrud('Combat Power', 'fa fa-chart-line', CharacterCombatPower::class);
+        yield MenuItem::linkToCrud('Progress', 'fa fa-chart-line', Progress::class);
 
         yield MenuItem::section('Admin');
         yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class);
