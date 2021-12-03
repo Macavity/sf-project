@@ -1,0 +1,4 @@
+parameters:
+    env(SENTRY_BACKEND): null
+sentry:
+    dsn: '%env(SENTRY_BACKEND)%'
