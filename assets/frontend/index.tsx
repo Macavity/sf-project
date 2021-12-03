@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'assets/plugins/sentry';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ToggleColorMode from './App';

@@ -1,13 +1,29 @@
 const Encore = require('@symfony/webpack-encore');
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
+const dotenvDefault = dotenv.config();
+const dotenvLocal = dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
-require('dotenv').config();
+
+let envValues = {
+    APP_ENV: '',
+};
+
+for (const key in dotenvDefault.parsed) {
+    if (typeof dotenvLocal.parsed[key] !== 'undefined') {
+        envValues[key] = dotenvLocal.parsed[key];
+    } else {
+        envValues[key] = dotenvDefault.parsed[key];
+    }
+}
+
+console.log('Build Environment: ' + envValues.APP_ENV);
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
-    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+    Encore.configureRuntimeEnvironment(envValues.NODE_ENV || 'dev');
 }
 
 Encore
@@ -73,9 +89,9 @@ Encore
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())
 
-
     .addPlugin(new webpack.DefinePlugin({
-        ADMIN_URL: JSON.stringify(process.env.ADMIN_URL),
+        ADMIN_URL: JSON.stringify(envValues.ADMIN_URL),
+        SENTRY_FRONTEND: JSON.stringify(envValues.SENTRY_FRONTEND),
     }))
 ;
 
