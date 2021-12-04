@@ -36,7 +36,7 @@ class CalculateStageScores extends Command
 
         foreach ($allZones as $zone) {
             $zone->scoreStart = $currentScore;
-            $io->writeln('Zone: ' . str_pad($zone->name, 20, '') . ' - Score: ' . $zone->scoreStart);
+            $io->writeln('Zone: ' . str_pad($zone->name, 20, ' ') . ' - Score: ' . $zone->scoreStart);
             $currentScore += $zone->stageCount;
             $this->em->flush();
         }

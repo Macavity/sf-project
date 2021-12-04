@@ -6,7 +6,7 @@ import { ZoneDetail } from './zones/components/ZoneDetail';
 import { BossList } from './bosses/components/BossList';
 import { BossDetail } from './bosses/components/BossDetail';
 import { CharacterList } from './teams/components/CharacterList';
-import AddPartySetupForm from './party-setups/components/AddPartySetupForm';
+import { AddPartySetupForm } from './party-setups/components/AddPartySetupForm';
 import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
 import NavBar from './components/NavBar';
 import { ColorModeContext } from './components/ColorModeSwitcher';
@@ -23,7 +23,7 @@ function ZoneKeyRoute() {
 function BossDetailKeyRoute() {
     const { bossId } = useParams<{ bossId: string }>();
     return (
-        <p><BossDetail bossId={Number(bossId)}/></p>
+        <BossDetail bossId={Number(bossId)}/>
     );
 }
 

@@ -1,7 +1,6 @@
 import { IFrontendState } from '../interfaces/IFrontendState';
-import { IWindow } from '../globals';
+import { loggerService } from './logger.service';
 
-declare const window: IWindow;
 
 export class FrontendStateService {
     public static get(): IFrontendState {
@@ -27,4 +26,3 @@ export class FrontendStateService {
 
 export const frontendState: IFrontendState = FrontendStateService.get();
 
-window.frontendState = frontendState;

@@ -2,6 +2,7 @@ import { BossQuery, bossQuery } from './boss.query';
 import { Boss } from '../models/Boss';
 import { BossStore, bossStore } from './boss.store';
 import { BossRepository } from './boss.repository';
+import { loggerService } from '../services/logger.service';
 
 
 class BossService {
@@ -13,6 +14,7 @@ class BossService {
 
     initBosses() {
         if (this._allBossesLoaded) {
+            console.debug('Bosses already loaded');
             return;
         }
 
@@ -27,9 +29,12 @@ class BossService {
     }
 
     loadBoss(bossId: number) {
+        loggerService.debug('Load Boss', bossId);
         this.bossStore.setLoading(true);
         BossRepository.findByKey(bossId)
             .then((boss: Boss) => {
+                loggerService.debug('Load Boss => ', boss);
+                loggerService.debug(boss);
                 this.bossStore.add(boss);
                 this.bossStore.setLoading(false);
             });

@@ -4,44 +4,55 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CharacterCombatPowerRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CharacterCombatPowerRepository::class)]
 #[ApiResource]
+#[ORM\HasLifecycleCallbacks]
 class CharacterCombatPower
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'characterCombatPowers')]
     #[ORM\JoinColumn(nullable: false)]
-    private $char;
+    private Character $char;
 
     #[ORM\Column(type: 'integer')]
     private int $value;
 
-    #[ORM\Column(type: 'datetime')]
-    private $createdOn;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?DateTimeInterface $createdAt;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $createdBy;
+    private ?User $createdBy;
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $dateTimeNow = new DateTime('now');
+
+        $this->setCreatedAt($dateTimeNow);
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOwner(): ?Character
+    public function getCharacter(): ?Character
     {
-        return $this->owner;
+        return $this->char;
     }
 
-    public function setOwner(?Character $owner): self
+    public function setCharacter(?Character $owner): self
     {
-        $this->owner = $owner;
+        $this->char = $owner;
 
         return $this;
     }
@@ -58,14 +69,14 @@ class CharacterCombatPower
         return $this;
     }
 
-    public function getCreatedOn(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
-        return $this->createdOn;
+        return $this->createdAt;
     }
 
-    public function setCreatedOn(\DateTimeInterface $createdOn): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
-        $this->createdOn = $createdOn;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

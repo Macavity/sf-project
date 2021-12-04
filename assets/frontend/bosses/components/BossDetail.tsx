@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { appQuery } from '../../store/app.query';
 import { AddSetupButton } from '../../elements/AddSetupButton';
+import { loggerService } from '../../services/logger.service';
 
 
 type LocalProps = {
@@ -56,8 +57,10 @@ export class BossDetail extends Component<LocalProps, LocalState> {
     }
 
     componentDidMount() {
+        loggerService.debug('bossQuery.selectEntity', this.props.bossId);
         bossQuery.selectEntity(this.props.bossId)
             .subscribe((boss) => {
+                console.log('subscribe', boss);
                 if (boss) {
                     console.log('BossQuery.subscribe: Entity set.');
                     this.setState({
@@ -107,31 +110,32 @@ export class BossDetail extends Component<LocalProps, LocalState> {
                 <CardHeader title={this.state.boss.name}/>
                 <CardContent>
                     {this.getAdminActions()}
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Area</TableCell>
-                                <TableCell>Level</TableCell>
-                                <TableCell colSpan={2}>Pet Elements</TableCell>
-                                <TableCell colSpan={4}>Party</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.getEmptyRow()}
-                            {setups.map((setup, i) => {
-                                return (
-                                    <PartySetupRow key={setup.zoneId + '-' + i}
-                                                   stageLevel={setup.stage}
-                                                   zoneId={setup.zoneId}
-                                                   bossName={boss.name}
-                                                   bossId={boss.id}
-                                                   primaryCounterElement={boss.primaryCounter}
-                                                   secondaryCounterElement={boss.secondaryCounter}
-                                    />
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
+                    {this.state.boss ? (
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Area</TableCell>
+                                    <TableCell>Level</TableCell>
+                                    <TableCell colSpan={2}>Pet Elements</TableCell>
+                                    <TableCell colSpan={4}>Party</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {setups.map((setup, i) => {
+                                    return (
+                                        <PartySetupRow key={setup.zoneId + '-' + i}
+                                                       stageLevel={setup.stage}
+                                                       zoneId={setup.zoneId}
+                                                       bossName={boss.name}
+                                                       bossId={boss.id}
+                                                       primaryCounterElement={boss.primaryCounter}
+                                                       secondaryCounterElement={boss.secondaryCounter}
+                                        />
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    ) : this.getEmptyRow()}
                 </CardContent>
             </Card>
         );

@@ -90,6 +90,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     .addPlugin(new webpack.DefinePlugin({
+        APP_ENV: JSON.stringify(envValues.APP_ENV),
         ADMIN_URL: JSON.stringify(envValues.ADMIN_URL),
         SENTRY_FRONTEND: JSON.stringify(envValues.SENTRY_FRONTEND),
     }))

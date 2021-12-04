@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProgressRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProgressRepository::class)]
@@ -22,24 +24,73 @@ class Progress
     #[ORM\ManyToOne(targetEntity: Zone::class)]
     private Zone $zone;
 
-    #[ORM\ManyToOne(targetEntity: Stage::class)]
-    private Stage $stage;
+    #[ORM\Column(nullable: false)]
+    private int $levelInZone;
 
-    private int $score = 0;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    private ?DateTimeInterface $createdAt;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $createdBy;
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $dateTimeNow = new DateTime('now');
+
+        $this->setCreatedAt($dateTimeNow);
+    }
+
+    public function getScore(): int
+    {
+        return $this->zone->scoreStart + $this->levelInZone;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOwner(): ?Character
+    public function getCharacter(): ?Character
     {
-        return $this->owner;
+        return $this->char;
     }
 
-    public function setOwner(?Character $owner): self
+    public function setCharacter(?Character $owner): self
     {
-        $this->owner = $owner;
+        $this->char = $owner;
+
+        return $this;
+    }
+
+    public function setProgress(Zone $zone, int $level): self
+    {
+        $this->zone = $zone;
+        $this->levelInZone = $level;
+
+        return $this;
+    }
+
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

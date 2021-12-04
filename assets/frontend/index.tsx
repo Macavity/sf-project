@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'assets/frontend/services/logger.service';
 import 'assets/plugins/sentry';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -7,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { akitaDevtools } from '@datorama/akita';
 import { skillStore } from './store/skills/skill.store';
 import { Skill } from './models/Skill';
+import './windowExports';
 
 skillStore.add(new Skill(0, 0, 'None'));
 

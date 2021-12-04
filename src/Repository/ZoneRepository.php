@@ -22,7 +22,7 @@ class ZoneRepository extends ServiceEntityRepository
         $choices = [];
 
         foreach ($entities as $entity) {
-            dump($entity);
+//            dump($entity);
             if ($entity->name && $entity->getId()) {
                 $choices[$entity->name] = $entity->getId();
             }
@@ -36,7 +36,7 @@ class ZoneRepository extends ServiceEntityRepository
         parent::__construct($registry, Zone::class);
     }
 
-    public function findAllOrdered()
+    public function findAllOrdered(): array
     {
         return $this->findBy([
             'isMystic' => false,
