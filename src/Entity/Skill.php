@@ -50,13 +50,14 @@ class Skill
         return $this->name . '(' . substr($this->job->name, 0, 1) . ')';
     }
 
-    #[ArrayShape(['id' => "int|null", 'name' => "string", 'shortName' => "string", 'job' => "int|null"])] public function toArray(): array
+    #[ArrayShape(['id' => "int|null", 'name' => "string", 'shortName' => "string", 'job' => "int|null"])]
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),
             'name' => $this->name,
             'shortName' => $this->shortName,
-            'job' => '/api/jobs/'.$this->job->getId(),
+            'job' => '/api/jobs/' . $this->job->getId(),
         ];
     }
 }

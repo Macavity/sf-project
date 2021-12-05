@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 import { skillService } from '../../store/skills/skill.service';
 import { AddSetupButton } from '../../elements/AddSetupButton';
+import { getCounterElement } from '../../factories/element.factory';
 
 type LocalProps = {
     zoneKey: number;
@@ -52,7 +53,6 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
             onlyLast: true,
         };
 
-        skillService.initSkills();
         zoneService.fetchZone(this.props.zoneKey);
     }
 
@@ -174,8 +174,8 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
                                                       zoneId={stage.areaKey}
                                                       bossName={stage.boss.name}
                                                       bossId={stage.boss.id}
-                                                      primaryCounterElement={stage.boss.primaryCounter}
-                                                      secondaryCounterElement={stage.boss.secondaryCounter}
+                                                      primaryCounterElement={getCounterElement(stage.boss.primaryElement)}
+                                                      secondaryCounterElement={getCounterElement(stage.boss.secondaryElement)}
                                             />
                                         );
                                     })}

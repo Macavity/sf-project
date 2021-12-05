@@ -7,8 +7,6 @@ use App\Entity\User;
 
 class AppState
 {
-    public array $skills;
-
     public ?string $userName;
 
     public ?string $userAvatar;
@@ -21,16 +19,11 @@ class AppState
      */
     public function __construct(
         public array $navigation,
-        array $skills,
+        public array $skills,
+        public array $jobs,
         public bool $isAdmin,
         ?User $user = null,
     ) {
-        $this->skills = [];
-
-        foreach ($skills as $skill) {
-            $this->skills[] = $skill->toArray();
-        }
-
         if ($user) {
             $this->user = $user;
             $this->userName = $user->getUserIdentifier();

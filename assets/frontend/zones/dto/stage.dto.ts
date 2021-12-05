@@ -1,10 +1,10 @@
-import { BossDTO } from '../../bosses/dto/boss.dto';
+import { IBoss } from '../../interfaces/IBoss';
 
 export class StageDTO {
     constructor(
         public id: number,
         public level: number,
-        public boss: BossDTO,
+        public boss: IBoss,
     ) {
 
     }

@@ -9,6 +9,7 @@ import { akitaDevtools } from '@datorama/akita';
 import { skillStore } from './store/skills/skill.store';
 import { Skill } from './models/Skill';
 import './windowExports';
+import { skillService } from './store/skills/skill.service';
 
 skillStore.add(new Skill(0, 0, 'None'));
 
@@ -18,6 +19,8 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('app'),
 );
+
+skillService.initSkills();
 
 
 // If you want to start measuring performance in your app, pass a function

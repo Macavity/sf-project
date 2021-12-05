@@ -9,7 +9,7 @@ export class StageFactory {
             zoneId,
             dto.level,
             dto.boss.id,
-            BossFactory.createFromDTO(dto.boss),
+            dto.boss,
         );
     }
 }

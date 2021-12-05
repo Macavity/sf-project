@@ -1,0 +1,19 @@
+import { ElementType } from '../enums/ElementType';
+
+export function getCounterElement(element: ElementType | null) {
+    if (element === null) {
+        return null;
+    }
+    switch (element) {
+        case ElementType.Fire:
+            return ElementType.Frost;
+        case ElementType.Earth:
+            return ElementType.Lightning;
+        case ElementType.Frost:
+            return ElementType.Earth;
+        case ElementType.Lightning:
+            return ElementType.Fire;
+    }
+
+    throw new Error('Unknown ElementType.');
+}

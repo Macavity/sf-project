@@ -1,4 +1,3 @@
-import { Boss } from '../../models/Boss';
 import { Component } from 'react';
 import { PartySetup } from '../../models/PartySetup';
 import { bossService } from '../boss.service';
@@ -20,6 +19,7 @@ import {
 import { appQuery } from '../../store/app.query';
 import { AddSetupButton } from '../../elements/AddSetupButton';
 import { loggerService } from '../../services/logger.service';
+import { IBoss } from '../../interfaces/IBoss';
 
 
 type LocalProps = {
@@ -28,7 +28,7 @@ type LocalProps = {
 
 type LocalState = {
     partySetups: PartySetup[];
-    boss: Boss | null;
+    boss: IBoss | null;
 }
 
 export class BossDetail extends Component<LocalProps, LocalState> {
@@ -128,8 +128,8 @@ export class BossDetail extends Component<LocalProps, LocalState> {
                                                        zoneId={setup.zoneId}
                                                        bossName={boss.name}
                                                        bossId={boss.id}
-                                                       primaryCounterElement={boss.primaryCounter}
-                                                       secondaryCounterElement={boss.secondaryCounter}
+                                                       primaryElement={boss.primaryElement}
+                                                       secondaryElement={boss.secondaryElement}
                                         />
                                     );
                                 })}

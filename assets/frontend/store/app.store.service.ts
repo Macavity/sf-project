@@ -4,7 +4,9 @@ class AppStoreService {
     constructor(private appStore: AppStore) {
     }
 
-
+    initJobs() {
+        
+    }
 }
 
 export const appStoreService = new AppStoreService(appStore);

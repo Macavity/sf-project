@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ElementTag } from '../../elements/ElementTag';
 import { bossQuery } from '../boss.query';
 import { bossService } from '../boss.service';
-import { Boss } from '../../models/Boss';
 import {
     Card,
     CardContent,
@@ -16,13 +15,14 @@ import {
     TableHead,
     TableRow
 } from '@mui/material';
+import { IBoss } from '../../interfaces/IBoss';
 
 interface Props {
 
 }
 
 interface State {
-    bosses: Boss[];
+    bosses: IBoss[];
     isLoading: boolean;
 }
 

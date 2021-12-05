@@ -1,31 +1,25 @@
-import { ApiService } from '../services/api.service';
-import { Boss } from '../models/Boss';
-import { BossDTO } from './dto/boss.dto';
-import { BossFactory } from './boss.factory';
-import { BossType } from '../enums/BossType';
-import { PartySetupDto } from '../party-setups/dto/party-setup.dto';
+import { ApiService } from 'assets/frontend/services/api.service';
+import { BossType } from 'assets/frontend/enums/BossType';
+import { PartySetupDto } from 'assets/frontend/party-setups/dto/party-setup.dto';
+import { IBoss } from 'assets/frontend/interfaces/IBoss';
 
 export class BossRepository {
-    public static findAll(): Promise<Boss[]> {
+    public static findAll(): Promise<IBoss[]> {
         return ApiService
-            .get<BossDTO[]>('/bosses.json')
-            .then((zoneResponse: BossDTO[]) => {
-                return zoneResponse.map(dto => BossFactory.createFromDTO(dto));
+            .get<IBoss[]>('/bosses.json')
+            .then((bosses: IBoss[]) => {
+                return bosses;
             });
     }
 
-    public static findByKey(id: BossType): Promise<Boss> {
-        return ApiService.get<BossDTO>(`/bosses/${id}.json`)
+    public static findByKey(id: BossType): Promise<IBoss> {
+        return ApiService.get<IBoss>(`/bosses/${id}.json`)
             .then(bossData => {
-                return BossFactory.createFromDTO(bossData);
+                return bossData;
             });
     }
 
     public static getPartySetupsForBossInZone(bossId: number, zoneId: number, level: number): Promise<PartySetupDto[]> {
-        if(typeof zoneId !== 'number'){
-            debugger;
-        }
-
         return ApiService.get<PartySetupDto[]>(`/bosses/${bossId}/zone/${zoneId}/party_setups.json?level=${level}`);
     }
 }

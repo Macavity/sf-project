@@ -1,8 +1,9 @@
 import { BossQuery, bossQuery } from './boss.query';
-import { Boss } from '../models/Boss';
 import { BossStore, bossStore } from './boss.store';
 import { BossRepository } from './boss.repository';
 import { loggerService } from '../services/logger.service';
+import { BossType } from '../enums/BossType';
+import { IBoss } from '../interfaces/IBoss';
 
 
 class BossService {
@@ -14,27 +15,36 @@ class BossService {
 
     initBosses() {
         if (this._allBossesLoaded) {
-            console.debug('Bosses already loaded');
+            loggerService.debug('Bosses already loaded');
             return;
         }
 
         this.bossStore.setLoading(true);
 
         BossRepository.findAll()
-            .then((bosses: Boss[]) => {
+            .then((bosses: IBoss[]) => {
+                loggerService.debug('✅ Initialized all Bosses.');
                 this.bossStore.set(bosses);
                 this._allBossesLoaded = true;
                 this.bossStore.setLoading(false);
             });
     }
 
+    routeToBoss(boss: IBoss): object {
+        return {
+            name: 'BossDetail',
+            params: {
+                bossName: BossType[boss.id],
+            },
+        };
+    }
+
     loadBoss(bossId: number) {
         loggerService.debug('Load Boss', bossId);
         this.bossStore.setLoading(true);
         BossRepository.findByKey(bossId)
-            .then((boss: Boss) => {
+            .then((boss: IBoss) => {
                 loggerService.debug('Load Boss => ', boss);
-                loggerService.debug(boss);
                 this.bossStore.add(boss);
                 this.bossStore.setLoading(false);
             });

@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\PartySetup;
 use App\Entity\Skill;
 use App\Entity\User;
+use App\Repository\JobRepository;
 use App\Repository\PartySetupRepository;
 use App\Repository\SkillRepository;
+use App\Services\AppStateService;
 use App\ValueObject\AppState;
 use App\ValueObject\NavEntry;
 use Psr\Log\LoggerInterface;
@@ -21,6 +23,8 @@ class FrontendController extends AbstractController
 {
     public function __construct(
         protected SkillRepository $skillRepository,
+        protected JobRepository $jobRepository,
+        protected AppStateService $appStateService,
     ) {
     }
 
@@ -38,41 +42,19 @@ class FrontendController extends AbstractController
          */
         $user = $this->getUser();
 
+        if ($user) {
+            $this->appStateService->setUser($user);
+        }
+
         if (!$user) {
             return $this->redirectToRoute('app_login');
         }
-
-        $navItems = [
-            new NavEntry('Continents', 'home', '/'),
-            new NavEntry('Bosses', 'bossList', '/boss-list'),
-        ];
-
-        if ($this->isGranted('ROLE_USER')) {
-            $navItems[] = new NavEntry('My Characters', 'myCharacters', '/my-characters');
-        }
-
-        if ($this->isGranted('ROLE_ADMIN')) {
-            $navItems[] = new NavEntry('[Backoffice]', 'admin', '/admin');
-            $navItems[] = new NavEntry('[RA]', 'react_admin', '/admin/react');
-        }
-
-        $appState = new AppState(
-            $navItems,
-            $this->fetchSkills(),
-            $this->isGranted('ROLE_ADMIN'),
-            $user,
-        );
+        $appState = $this->appStateService->getAppState();
+        //dump($appState);
 
         return $this->render('frontend/index.html.twig', [
             'state' => $appState,
         ]);
-    }
-
-    private function fetchSkills(): array
-    {
-        $skills = $this->skillRepository->findAll();
-
-        return $skills;
     }
 
 }

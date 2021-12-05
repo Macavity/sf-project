@@ -33,9 +33,6 @@ class Job
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: JobRotation::class, orphanRemoval: true)]
     private $jobRotations;
 
-    #[ORM\OneToMany(mappedBy: 'job', targetEntity: Character::class)]
-    private $characters;
-
     public function __construct()
     {
         $this->jobRotations = new ArrayCollection();
@@ -76,36 +73,6 @@ class Job
             // set the owning side to null (unless already changed)
             if ($jobRotation->getJob() === $this) {
                 $jobRotation->setJob(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Character[]
-     */
-    public function getCharacters(): Collection
-    {
-        return $this->characters;
-    }
-
-    public function addCharacter(Character $character): self
-    {
-        if (!$this->characters->contains($character)) {
-            $this->characters[] = $character;
-            $character->setJob($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacter(Character $character): self
-    {
-        if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
-            if ($character->getJob() === $this) {
-                $character->setJob(null);
             }
         }
 

@@ -4,6 +4,7 @@ import { Skill } from '../../models/Skill';
 import { Observable } from 'rxjs';
 import { notEmpty } from '../../helpers/filter';
 import { SkillRepository } from './skill.repository';
+import { loggerService } from '../../services/logger.service';
 
 
 export class SkillService {
@@ -11,12 +12,11 @@ export class SkillService {
     }
 
     initSkills() {
-        console.debug('Initialize all Skills');
         this.skillStore.setLoading(true);
 
         SkillRepository.findAll().then(skillsByJob => {
             this.skillStore.set(skillsByJob);
-            console.debug('✅ Initialized all Skills');
+            loggerService.debug('✅ Initialized all Skills');
             this.skillStore.setLoading(false);
         });
     }

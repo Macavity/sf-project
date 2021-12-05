@@ -8,24 +8,19 @@ import { ShamanSkill } from 'assets/frontend/models/Shaman';
 
 export type SkillType = AssassinSkill | GladiatorSkill | DruidSkill | HunterSkill | MageSkill | ShamanSkill;
 
-export interface IJobDTO {
-  id: number;
-  name: string;
-}
-
 export interface ISkillDTO {
-  id: number;
-  name: string;
-  shortName: string;
-  job: string;
+    id: number;
+    name: string;
+    shortName: string;
+    job: string;
 }
 
 export class Skill {
-  constructor(
-    public id: number,
-    public classType: ClassType,
-    public shortName: string,
-    public icon: string | null = null,
-  ) {
-  }
+    constructor(
+        public id: number,
+        public classType: ClassType,
+        public shortName: string,
+        public icon: string | null = null,
+    ) {
+    }
 }
