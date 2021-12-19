@@ -37,7 +37,7 @@ const NavBar = () => {
     };
 
     return (
-        <AppBar position="static" sx={{mb:2}}>
+        <AppBar position="static" sx={{ mb: 2 }}>
             <Container maxWidth={false}>
                 <Toolbar disableGutters>
                     <Typography
@@ -108,31 +108,39 @@ const NavBar = () => {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <ColorModeSwitcher/>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={frontendState.userName || ''} src={frontendState.userAvatar || ''}/>
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            <MenuItem onClick={handleCloseNavMenu}>
-                                <Link component="a" href="/logout" sx={{textDecoration: 'none', color: 'inherit'}}>Logout</Link>
-                            </MenuItem>
-                        </Menu>
+                        {frontendState.isUser ? (
+                            <>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <Avatar alt={frontendState.userName || ''}
+                                                src={frontendState.userAvatar || ''}/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    <MenuItem onClick={handleCloseNavMenu}>
+                                        <Link component="a" href="/logout"
+                                              sx={{ textDecoration: 'none', color: 'inherit' }}>Logout</Link>
+                                    </MenuItem>
+                                </Menu>
+                            </>
+                        ) : null}
+
+
                     </Box>
                 </Toolbar>
             </Container>

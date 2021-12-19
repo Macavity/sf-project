@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { appQuery } from '../../store/app.query';
 import { AddSetupButton } from '../../elements/AddSetupButton';
+import { IWindow } from "../../globals";
 
 
 type LocalProps = {
@@ -29,6 +30,8 @@ type LocalState = {
     partySetups: PartySetup[];
     boss: Boss | null;
 }
+
+declare let window: IWindow;
 
 export class BossDetail extends Component<LocalProps, LocalState> {
     constructor(props: LocalProps) {
@@ -44,7 +47,7 @@ export class BossDetail extends Component<LocalProps, LocalState> {
     }
 
     getAdminActions() {
-        if (!appQuery.isAdmin()) {
+        if (!window.frontendState.isUser) {
             return null;
         }
 

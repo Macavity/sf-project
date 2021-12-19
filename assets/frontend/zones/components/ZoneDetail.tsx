@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 import { skillService } from '../../store/skills/skill.service';
 import { AddSetupButton } from '../../elements/AddSetupButton';
+import { IWindow } from "../../globals";
 
 type LocalProps = {
     zoneKey: number;
@@ -35,6 +36,8 @@ type LocalState = {
     isAdmin: boolean;
     onlyLast: boolean;
 }
+
+declare let window: IWindow;
 
 const sortByLevel = (a: Stage, b: Stage) => (a.level > b.level) ? 1 : -1;
 
@@ -136,7 +139,7 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
     };
 
     getAdminActions() {
-        if (!this.state.isAdmin) {
+        if (!window.frontendState.isUser) {
             return null;
         }
         return (

@@ -4,6 +4,7 @@ namespace App\ValueObject;
 
 use App\Entity\Skill;
 use App\Entity\User;
+use JetBrains\PhpStorm\Pure;
 
 class AppState
 {
@@ -17,14 +18,16 @@ class AppState
 
     /**
      * @param NavEntry[] $navigation
-     * @param Skill[]    $skills
+     * @param Skill[] $skills
      */
     public function __construct(
         public array $navigation,
-        array $skills,
-        public bool $isAdmin,
-        ?User $user = null,
-    ) {
+        array        $skills,
+        public bool  $isUser,
+        public bool  $isAdmin,
+        ?User        $user = null,
+    )
+    {
         $this->skills = [];
 
         foreach ($skills as $skill) {
@@ -38,6 +41,7 @@ class AppState
         }
     }
 
+    #[Pure]
     public function getUserAvatar(): ?string
     {
         if (!$this->user) {

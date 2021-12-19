@@ -20,9 +20,9 @@ security:
       lazy: true
       provider: app_user_provider
 
-#      form_login:
-#        login_path: login
-#        check_path: login
+      #      form_login:
+      #        login_path: login
+      #        check_path: login
       custom_authenticator: App\Security\LoginFormAuthenticator
       #target_path: /
       logout:
@@ -39,15 +39,15 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     # API
-    - { path: ^/api,          roles: ROLE_USER }
+    - { path: ^/api,          roles: PUBLIC_ACCESS }
     # Admin
     - { path: ^/admin,        roles: ROLE_ADMIN }
     - { path: ^/admin/react,  roles: ROLE_ADMIN }
     # For Users
-    - { path: ^/zones,        roles: ROLE_USER }
-    - { path: ^/zone/,        roles: ROLE_USER }
-    - { path: ^/boss-list,    roles: ROLE_USER }
-    - { path: ^/boss/,        roles: ROLE_USER }
+    - { path: ^/zones,        roles: PUBLIC_ACCESS }
+    - { path: ^/zone/,        roles: PUBLIC_ACCESS }
+    - { path: ^/boss-list,    roles: PUBLIC_ACCESS }
+    - { path: ^/boss/,        roles: PUBLIC_ACCESS }
     - { path: ^/,             roles: PUBLIC_ACCESS }
     # Public Access
     - { path: ^/login,        roles: PUBLIC_ACCESS }
