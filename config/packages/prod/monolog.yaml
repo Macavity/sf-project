@@ -15,6 +15,3 @@ monolog:
       type: console
       process_psr_3_messages: false
       channels: [ "!event", "!doctrine" ]
-    rollbar:
-      type: service
-      id: Rollbar\Monolog\Handler\RollbarHandler
