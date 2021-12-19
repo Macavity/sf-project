@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d1240213122a57a286a64d5e2a02795",
+    "content-hash": "0e647593d72e1726aaf581e750049234",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2570,6 +2570,99 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.13.0"
             },
             "time": "2021-09-20T12:20:58+00:00"
+        },
+        {
+            "name": "paneon/php-to-typescript",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Paneon/php-to-typescript.git",
+                "reference": "8bc12996e30ac6dc25f04345cef57844a2061520"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Paneon/php-to-typescript/zipball/8bc12996e30ac6dc25f04345cef57844a2061520",
+                "reference": "8bc12996e30ac6dc25f04345cef57844a2061520",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.6",
+                "monolog/monolog": "^1.24|^2",
+                "nikic/php-parser": "^3.1.0|^4.0.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Paneon\\PhpToTypeScript\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Pape",
+                    "email": "a.pape@paneon.de"
+                }
+            ],
+            "description": "Generate TypeScript classes and interfaces based on PHP classes.",
+            "support": {
+                "issues": "https://github.com/Paneon/php-to-typescript/issues",
+                "source": "https://github.com/Paneon/php-to-typescript/tree/1.1.0"
+            },
+            "time": "2021-12-15T10:05:32+00:00"
+        },
+        {
+            "name": "paneon/php-to-typescript-bundle",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Paneon/php-to-typescript-bundle.git",
+                "reference": "5dda5ca622d5624a078c097f84a56ac34d087d03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Paneon/php-to-typescript-bundle/zipball/5dda5ca622d5624a078c097f84a56ac34d087d03",
+                "reference": "5dda5ca622d5624a078c097f84a56ac34d087d03",
+                "shasum": ""
+            },
+            "require": {
+                "paneon/php-to-typescript": "^1.0.0",
+                "php": "^8.0",
+                "symfony/console": "^4.0|^5.0",
+                "symfony/framework-bundle": "^4.0|^5.0",
+                "symfony/monolog-bundle": "^1|^2|^3"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Paneon\\PhpToTypeScriptBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Pape",
+                    "email": "a.pape@paneon.de"
+                }
+            ],
+            "description": "Symfony-Bundle to use the PHP to Typescript library",
+            "support": {
+                "issues": "https://github.com/Paneon/php-to-typescript-bundle/issues",
+                "source": "https://github.com/Paneon/php-to-typescript-bundle/tree/1.0.0"
+            },
+            "time": "2021-12-14T16:08:24+00:00"
         },
         {
             "name": "php-http/client-common",
