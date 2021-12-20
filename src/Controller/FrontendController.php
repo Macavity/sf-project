@@ -12,8 +12,6 @@ use App\Services\AppStateService;
 use App\ValueObject\AppState;
 use App\ValueObject\NavEntry;
 use Psr\Log\LoggerInterface;
-use Rollbar\Payload\Level;
-use Rollbar\Rollbar;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,9 +44,9 @@ class FrontendController extends AbstractController
             $this->appStateService->setUser($user);
         }
 
-        if (!$user) {
+        /*if (!$user) {
             return $this->redirectToRoute('app_login');
-        }
+        }*/
         $appState = $this->appStateService->getAppState();
         //dump($appState);
 

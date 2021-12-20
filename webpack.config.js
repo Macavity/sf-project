@@ -2,8 +2,15 @@ const Encore = require('@symfony/webpack-encore');
 const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
+const fs = require("fs");
 const dotenvDefault = dotenv.config();
-const dotenvLocal = dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
+
+const dotEnvLocalPath = path.resolve(process.cwd(), '.env.local');
+let dotenvLocal = {parsed: {}};
+
+if (fs.existsSync(dotEnvLocalPath)) {
+    dotenvLocal = dotenv.config({path: dotEnvLocalPath});
+}
 
 
 let envValues = {

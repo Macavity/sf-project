@@ -153,6 +153,12 @@
     "nikic/php-parser": {
         "version": "v4.13.0"
     },
+    "paneon/php-to-typescript": {
+        "version": "1.1.0"
+    },
+    "paneon/php-to-typescript-bundle": {
+        "version": "1.0.0"
+    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },

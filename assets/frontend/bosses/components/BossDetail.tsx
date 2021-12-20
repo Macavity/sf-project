@@ -20,6 +20,7 @@ import { appQuery } from '../../store/app.query';
 import { AddSetupButton } from '../../elements/AddSetupButton';
 import { loggerService } from '../../services/logger.service';
 import { IBoss } from '../../interfaces/IBoss';
+import { IWindow } from "../../globals";
 
 
 type LocalProps = {
@@ -30,6 +31,8 @@ type LocalState = {
     partySetups: PartySetup[];
     boss: IBoss | null;
 }
+
+declare let window: IWindow;
 
 export class BossDetail extends Component<LocalProps, LocalState> {
     constructor(props: LocalProps) {
@@ -45,7 +48,7 @@ export class BossDetail extends Component<LocalProps, LocalState> {
     }
 
     getAdminActions() {
-        if (!appQuery.isAdmin()) {
+        if (!window.frontendState.isUser) {
             return null;
         }
 
