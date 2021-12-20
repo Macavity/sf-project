@@ -95,5 +95,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.SSH_PATH }}
+            rm -rf var
             php80 bin/console cache:clear --env=dev
             php80 bin/console cache:clear --env=prod
