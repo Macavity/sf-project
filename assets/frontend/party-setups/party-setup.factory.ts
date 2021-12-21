@@ -17,7 +17,7 @@ export class PartySetupFactory {
 
         return new PartySetup(
             dto.id,
-            ZoneFactory.extractId(dto.zone),
+            dto.zone ? ZoneFactory.extractId(dto.zone) : null,
             dto.stageLevel,
             BossFactory.extractId(dto.boss),
             dto.gladiatorRotation,
