@@ -2,7 +2,7 @@ export class PartySetupDto {
     constructor(
         public id: number,
         public stageLevel: number,
-        public zone: string, /* IRI */
+        public zone: string | undefined, /* IRI */
         public boss: string, /* IRI */
         public gladiatorRotation: string | undefined,
         public warriorRotation: string | undefined,

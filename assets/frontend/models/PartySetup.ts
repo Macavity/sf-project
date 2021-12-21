@@ -2,7 +2,7 @@ export class PartySetup {
 
     constructor(
         public id: number,
-        public zoneId: number,
+        public zoneId: number | null,
         public stage: number,
         public bossId: number,
         public gladiator: string | null = null,
