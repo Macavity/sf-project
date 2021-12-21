@@ -13,7 +13,9 @@ export function getCounterElement(element: ElementType | null) {
             return ElementType.Earth;
         case ElementType.Lightning:
             return ElementType.Fire;
+        case ElementType.None:
+            return ElementType.None;
     }
 
-    throw new Error('Unknown ElementType.');
+    throw new Error('Unknown ElementType: ' + element);
 }

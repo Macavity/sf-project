@@ -48,6 +48,10 @@ export class LoggerService {
             }
         }
     }
+
+    error(...data: unknown[]) {
+        console.error(data);
+    }
 }
 
 export const loggerService = new LoggerService();
