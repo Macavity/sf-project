@@ -80,7 +80,7 @@ class JobRotation
         return join(" ", $skillNames);
     }
 
-    public function getSkillOnSlot(int $slot)
+    public function getSkillOnSlot(int $slot): ?Skill
     {
         if ($slot === 1) {
             return $this->skill1;
@@ -91,6 +91,11 @@ class JobRotation
         } else {
             return $this->skill4;
         }
+    }
+
+    public function __toString(): string
+    {
+        return $this->getSlug();
     }
 
     public function getId(): ?int

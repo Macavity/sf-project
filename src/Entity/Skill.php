@@ -66,4 +66,9 @@ class Skill
             'job' => '/api/jobs/' . $this->job->getId(),
         ];
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }

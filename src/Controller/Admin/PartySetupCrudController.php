@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\PartySetup;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -19,19 +20,30 @@ class PartySetupCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
-            AssociationField::new('zone'),
-            NumberField::new('stageLevel'),
-            AssociationField::new('boss'),
-            BooleanField::new('gladiatorRotation', 'Gladiator'),
-            BooleanField::new('warriorRotation', 'Warrior'),
-            BooleanField::new('druidRotation', 'Druid'),
-            BooleanField::new('shamanRotation', 'Shaman'),
-            BooleanField::new('assassinRotation', 'Assa'),
-            BooleanField::new('hunterRotation', 'Hunter'),
-            BooleanField::new('warlockRotation', 'Warlock'),
-            BooleanField::new('mageRotation', 'Mage'),
-        ];
+        yield AssociationField::new('zone');
+        yield NumberField::new('stageLevel');
+        yield AssociationField::new('boss');
+
+        if ($pageName === Crud::PAGE_INDEX) {
+            yield BooleanField::new('gladiatorRotation', 'Gladiator');
+            yield BooleanField::new('warriorRotation', 'Warrior');
+            yield BooleanField::new('druidRotation', 'Druid');
+            yield BooleanField::new('shamanRotation', 'Shaman');
+            yield BooleanField::new('assassinRotation', 'Assa');
+            yield BooleanField::new('hunterRotation', 'Hunter');
+            yield BooleanField::new('warlockRotation', 'Warlock');
+            yield BooleanField::new('mageRotation', 'Mage');
+        } else {
+            yield AssociationField::new('gladiatorRotation', 'Gladiator');
+            yield AssociationField::new('warriorRotation', 'Warrior');
+            yield AssociationField::new('druidRotation', 'Druid');
+            yield AssociationField::new('shamanRotation', 'Shaman');
+            yield AssociationField::new('assassinRotation', 'Assa');
+            yield AssociationField::new('hunterRotation', 'Hunter');
+            yield AssociationField::new('warlockRotation', 'Warlock');
+            yield AssociationField::new('mageRotation', 'Mage');
+        }
+
     }
 
     public function configureFilters(Filters $filters): Filters
