@@ -19,6 +19,19 @@ jobs:
         with:
           php-version: 8.0
 
+      - name: Create .env
+        uses: iamsauravsharma/create-dotenv@v1.2.0
+        with:
+          env-prefix: 'ENV_KEY_'
+        env:
+          ENV_KEY_APP_ENV: prod
+          ENV_KEY_APP_SECRET: ${{ secrets.ENV_APP_SECRET }}
+          ENV_KEY_ADMIN_URL: ${{ secrets.ENV_ADMIN_URL }}
+          ENV_KEY_DATABASE_URL: ${{ secrets.ENV_DATABASE_URL }}
+          ENV_KEY_CORS_ALLOW_ORIGIN: ${{ secrets.ENV_CORS_ALLOW_ORIGIN }}
+          ENV_KEY_SENTRY_FRONTEND: ${{ secrets.SENTRY_FRONTEND }}
+          ENV_KEY_SENTRY_BACKEND: ${{ secrets.SENTRY_BACKEND }}
+
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
@@ -39,19 +52,6 @@ jobs:
 
       - name: Remove var
         run: rm -rf var
-
-      - name: Create .env
-        uses: iamsauravsharma/create-dotenv@v1.2.0
-        with:
-          env-prefix: 'ENV_KEY_'
-        env:
-          ENV_KEY_APP_ENV: prod
-          ENV_KEY_APP_SECRET: ${{ secrets.ENV_APP_SECRET }}
-          ENV_KEY_ADMIN_URL: ${{ secrets.ENV_ADMIN_URL }}
-          ENV_KEY_DATABASE_URL: ${{ secrets.ENV_DATABASE_URL }}
-          ENV_KEY_CORS_ALLOW_ORIGIN: ${{ secrets.ENV_CORS_ALLOW_ORIGIN }}
-          ENV_KEY_SENTRY_FRONTEND: ${{ secrets.SENTRY_FRONTEND }}
-          ENV_KEY_SENTRY_BACKEND: ${{ secrets.SENTRY_BACKEND }}
 
       #
       # Deployment

@@ -7,6 +7,7 @@ declare const SENTRY_FRONTEND: string;
 if (typeof SENTRY_FRONTEND === 'undefined') {
     loggerService.debug('Sentry not defined.');
 } else {
+    //console.log('Sentry', SENTRY_FRONTEND);
     Sentry.init({
         // Placeholder for Webpack
         dsn: SENTRY_FRONTEND,

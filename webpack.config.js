@@ -15,6 +15,7 @@ if (fs.existsSync(dotEnvLocalPath)) {
 
 let envValues = {
     APP_ENV: '',
+    NODE_ENV: process.env.NODE_ENV || 'prod',
 };
 
 for (const key in dotenvDefault.parsed) {
@@ -25,7 +26,8 @@ for (const key in dotenvDefault.parsed) {
     }
 }
 
-console.log('Build Environment: ' + envValues.APP_ENV);
+console.log('Build Environment: ' + envValues.NODE_ENV);
+console.log('Sentry: ' + envValues.SENTRY_FRONTEND);
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -70,7 +72,7 @@ Encore
      */
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
-    .enableSourceMaps(!Encore.isProduction())
+    .enableSourceMaps(true)
     .enableVersioning(Encore.isProduction())
 
     .configureBabel((config) => {
