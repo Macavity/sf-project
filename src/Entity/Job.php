@@ -7,8 +7,12 @@ use App\Repository\JobRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Paneon\PhpToTypeScript\Annotation as PTS;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @PTS\TypeScriptInterface
+ */
 #[ORM\Entity(repositoryClass: JobRepository::class)]
 #[ApiResource]
 class Job
@@ -16,6 +20,7 @@ class Job
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /** @PTS\Type("number") */
     private ?int $id;
 
     #[ORM\Column]
@@ -27,11 +32,18 @@ class Job
     public string $slug;
 
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: Skill::class)]
-    /** @var Skill[] */
+    /**
+     * @var Skill[]
+     * @PTS\Type("string[]")
+     */
     public iterable $skills;
 
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: JobRotation::class, orphanRemoval: true)]
-    private $jobRotations;
+    /**
+     * @var JobRotation[]
+     * @PTS\Type("string[]")
+     */
+    private iterable $jobRotations;
 
     public function __construct()
     {

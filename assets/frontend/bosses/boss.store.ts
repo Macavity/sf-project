@@ -1,5 +1,4 @@
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { IBoss } from '../interfaces/IBoss';
 
 export interface BossState extends EntityState<IBoss, number> {
 }

@@ -8,6 +8,9 @@ import { ShamanSkill } from 'assets/frontend/models/Shaman';
 
 export type SkillType = AssassinSkill | GladiatorSkill | DruidSkill | HunterSkill | MageSkill | ShamanSkill;
 
+/**
+ * @deprecated Use ISkill instead
+ */
 export interface ISkillDTO {
     id: number;
     name: string;

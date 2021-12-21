@@ -15,7 +15,6 @@ import {
     TableHead,
     TableRow
 } from '@mui/material';
-import { IBoss } from '../../interfaces/IBoss';
 
 interface Props {
 

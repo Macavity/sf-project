@@ -1,6 +1,4 @@
-import { ElementType } from 'assets/frontend/enums/ElementType';
-
-export interface IBoss {
+interface IBoss {
     id: number;
     name: string;
     primaryElement: ElementType;

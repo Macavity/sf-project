@@ -19,10 +19,10 @@ import {
     TableHead,
     TableRow
 } from '@mui/material';
-import { skillService } from '../../store/skills/skill.service';
 import { AddSetupButton } from '../../elements/AddSetupButton';
 import { getCounterElement } from '../../factories/element.factory';
-import { IWindow } from "../../globals";
+
+declare let window: IWindow;
 
 type LocalProps = {
     zoneKey: number;
@@ -37,8 +37,6 @@ type LocalState = {
     isAdmin: boolean;
     onlyLast: boolean;
 }
-
-declare let window: IWindow;
 
 const sortByLevel = (a: Stage, b: Stage) => (a.level > b.level) ? 1 : -1;
 

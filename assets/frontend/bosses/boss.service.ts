@@ -3,8 +3,6 @@ import { BossStore, bossStore } from './boss.store';
 import { BossRepository } from './boss.repository';
 import { loggerService } from '../services/logger.service';
 import { BossType } from '../enums/BossType';
-import { IBoss } from '../interfaces/IBoss';
-
 
 class BossService {
 

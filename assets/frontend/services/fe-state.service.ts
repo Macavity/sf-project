@@ -1,9 +1,5 @@
-import { IFrontendState } from '../interfaces/IFrontendState';
-import { loggerService } from './logger.service';
-
-
 export class FrontendStateService {
-    public static get(): IFrontendState {
+    public static get(): IAppState {
         const $appState = document.getElementById('appstate');
 
         if (!$appState) {
@@ -24,5 +20,5 @@ export class FrontendStateService {
     }
 }
 
-export const frontendState: IFrontendState = FrontendStateService.get();
+export const frontendState: IAppState = FrontendStateService.get();
 

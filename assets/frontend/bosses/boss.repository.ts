@@ -1,7 +1,6 @@
 import { ApiService } from 'assets/frontend/services/api.service';
 import { BossType } from 'assets/frontend/enums/BossType';
 import { PartySetupDto } from 'assets/frontend/party-setups/dto/party-setup.dto';
-import { IBoss } from 'assets/frontend/interfaces/IBoss';
 
 export class BossRepository {
     public static findAll(): Promise<IBoss[]> {

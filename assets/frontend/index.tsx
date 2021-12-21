@@ -3,12 +3,12 @@ import 'assets/frontend/services/logger.service';
 import 'assets/plugins/sentry';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './windowExports';
 import ToggleColorMode from './App';
 import reportWebVitals from './reportWebVitals';
 import { akitaDevtools } from '@datorama/akita';
 import { skillStore } from './store/skills/skill.store';
 import { Skill } from './models/Skill';
-import './windowExports';
 import { skillService } from './store/skills/skill.service';
 
 skillStore.add(new Skill(0, 0, 'None'));

@@ -90,7 +90,7 @@ export class AddPartySetupForm extends React.Component<Props, State> {
         });
     }
 
-    selectJob(event) {
+    selectJob(event: unknown) {
         console.log(event);
     }
 
@@ -127,7 +127,7 @@ export class AddPartySetupForm extends React.Component<Props, State> {
                                     <InputLabel id="demo-simple-select-label">Job</InputLabel>
                                     <Select value={this.state.char1class} label="Job">
                                         {this.state.jobChoices.map((choice: IChoice) => (
-                                            <MenuItem key={choice.id} value={choice.id}>{choice.label}</MenuItem>
+                                            <MenuItem key={choice.value} value={choice.value}>{choice.label}</MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>

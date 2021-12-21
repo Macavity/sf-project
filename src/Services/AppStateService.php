@@ -8,6 +8,7 @@ use App\Repository\SkillRepository;
 use App\ValueObject\AppState;
 use App\ValueObject\NavEntry;
 use EasyCorp\Bundle\EasyAdminBundle\Security\AuthorizationChecker;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class AppStateService
@@ -16,27 +17,40 @@ class AppStateService
 
     protected ?User $user = null;
 
+    private Request $request;
+
     public function __construct(
-        protected NormalizerInterface $normalizer,
+        protected NormalizerInterface  $normalizer,
         protected AuthorizationChecker $authorizationChecker,
-        protected SkillRepository $skillRepository,
-        protected JobRepository $jobRepository,
-    ) {
+        protected SkillRepository      $skillRepository,
+        protected JobRepository        $jobRepository,
+    )
+    {
 
     }
 
-    public function getAppState()
+    public function getAppState(): AppState
     {
         return new AppState(
             $this->getNavItems(),
             $this->fetchSkills(),
             $this->fetchJobs(),
+            $this->authorizationChecker->isGranted('ROLE_USER'),
             $this->authorizationChecker->isGranted('ROLE_ADMIN'),
             $this->user,
+            $this->getFrontController(),
         );
     }
 
-    private function fetchJobs()
+    private function getFrontController(): string
+    {
+        $baseUrl = $this->request->getBaseUrl();
+        $pathElements = explode('/', $baseUrl);
+
+        return $pathElements[1] ?? '';
+    }
+
+    private function fetchJobs(): array
     {
         $jobs = $this->jobRepository->findAll();
 
@@ -73,5 +87,10 @@ class AppStateService
     {
         $this->user = $user;
         return $this;
+    }
+
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
     }
 }

@@ -1,5 +1,3 @@
-import { IBoss } from '../../interfaces/IBoss';
-
 export class StageDTO {
     constructor(
         public id: number,

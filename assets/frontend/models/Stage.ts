@@ -1,5 +1,4 @@
 import { AreaKey, AreaNames } from 'assets/frontend/enums/AreaKey';
-import { IBoss } from '../interfaces/IBoss';
 
 export class Stage {
     public name: string;

@@ -11,7 +11,7 @@ import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
 import NavBar from './components/NavBar';
 import { ColorModeContext } from './components/ColorModeSwitcher';
 
-declare let window: Window;
+declare let window: IWindow;
 
 function ZoneKeyRoute() {
     const { zoneKey } = useParams<{ zoneKey: string }>();
@@ -27,9 +27,11 @@ function BossDetailKeyRoute() {
     );
 }
 
+const basename = window.frontendState.frontController ? '/' + window.frontendState.frontController : '';
+
 function AppRouter() {
     return (
-        <Router>
+        <Router basename={basename}>
             <NavBar/>
             <Switch>
                 <Route exact path="/">

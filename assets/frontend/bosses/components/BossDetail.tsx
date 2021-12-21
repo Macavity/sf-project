@@ -16,12 +16,10 @@ import {
     TableHead,
     TableRow
 } from '@mui/material';
-import { appQuery } from '../../store/app.query';
 import { AddSetupButton } from '../../elements/AddSetupButton';
 import { loggerService } from '../../services/logger.service';
-import { IBoss } from '../../interfaces/IBoss';
-import { IWindow } from "../../globals";
 
+declare let window: IWindow;
 
 type LocalProps = {
     bossId: number;
@@ -31,8 +29,6 @@ type LocalState = {
     partySetups: PartySetup[];
     boss: IBoss | null;
 }
-
-declare let window: IWindow;
 
 export class BossDetail extends Component<LocalProps, LocalState> {
     constructor(props: LocalProps) {

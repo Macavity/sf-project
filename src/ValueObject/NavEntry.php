@@ -2,15 +2,20 @@
 
 namespace App\ValueObject;
 
-use Symfony\Component\Routing\Route;
+use Paneon\PhpToTypeScript\Annotation\TypeScriptInterface;
 
-class NavEntry {
+/**
+ * @TypeScriptInterface
+ */
+class NavEntry
+{
 
     public function __construct(
         public string $label,
         public string $route,
         public string $url,
-    ) {
+    )
+    {
 
     }
 }

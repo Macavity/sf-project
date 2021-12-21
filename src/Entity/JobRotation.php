@@ -9,8 +9,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\JobRotationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Paneon\PhpToTypeScript\Annotation\TypeScriptInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+/**
+ * @TypeScriptInterface
+ */
 #[ORM\Entity(repositoryClass: JobRotationRepository::class)]
 #[ORM\UniqueConstraint(name: 'skill_combination', columns: [
     'skill1_id',
