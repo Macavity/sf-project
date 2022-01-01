@@ -71,9 +71,9 @@ class AppStateService
             new NavEntry('Bosses', 'bossList', '/boss-list'),
         ];
 
-        if ($this->authorizationChecker->isGranted('ROLE_USER')) {
-            $navItems[] = new NavEntry('My Characters', 'myCharacters', '/my-characters');
-        }
+        // if ($this->authorizationChecker->isGranted('ROLE_USER')) {
+        //     $navItems[] = new NavEntry('My Characters', 'myCharacters', '/my-characters');
+        // }
 
         if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $navItems[] = new NavEntry('[Backoffice]', 'admin', '/admin');

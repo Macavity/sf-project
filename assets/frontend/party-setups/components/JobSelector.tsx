@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { bossQuery } from "assets/frontend/bosses/boss.query";
 import { bossService } from "assets/frontend/bosses/boss.service";
 import { loggerService } from "assets/frontend/services/logger.service";
+import { jobQuery } from "assets/frontend/store/jobs/job.query";
 import React from "react";
 
 interface IBossChoice {
@@ -11,10 +12,14 @@ interface IBossChoice {
     value: number;
 }
 
-export default function BossSelector() {
-    const [boss, setBoss] = React.useState<IBossChoice | null>(null);
+interface IProps {
+    onChange: (jobName: string | null) => void;
+}
+
+export default function JobSelector(props: IProps) {
+    const [job, setJob] = React.useState<string | null>(null);
     const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState<IBossChoice[]>([]);
+    const [options, setOptions] = React.useState<string[]>([]);
     const loading = open && options.length === 0;
 
     React.useEffect(() => {
@@ -24,16 +29,8 @@ export default function BossSelector() {
             return undefined;
         }
 
-        bossQuery.selectAll().subscribe((bosses) => {
-            if (bosses && bosses.length) {
-                const bossChoices = [
-                    ...bosses.map((boss) => {
-                        return { label: boss.name, value: boss.id };
-                    }),
-                ];
-
-                setOptions([...bossChoices]);
-            }
+        jobQuery.selectAll().subscribe((jobs) => {
+            setOptions([...jobs.map((job) => job.name)]);
         });
 
         return () => {
@@ -46,12 +43,11 @@ export default function BossSelector() {
             <Autocomplete
                 fullWidth
                 open={open}
-                value={boss}
+                value={job}
                 onChange={(event, value) => {
-                    loggerService.debug(
-                        "Change Boss to: " + JSON.stringify(value),
-                    );
-                    setBoss(value);
+                    console.log(event);
+                    setJob(value);
+                    props.onChange(value);
                 }}
                 onOpen={() => {
                     setOpen(true);
@@ -59,16 +55,12 @@ export default function BossSelector() {
                 onClose={() => {
                     setOpen(false);
                 }}
-                isOptionEqualToValue={(option, value) =>
-                    option.label === value.label
-                }
-                getOptionLabel={(option) => option.label}
                 options={options}
                 loading={loading}
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        label="Boss"
+                        label="Job"
                         InputProps={{
                             ...params.InputProps,
                             endAdornment: (
