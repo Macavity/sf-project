@@ -1,4 +1,4 @@
-import { ISkillDTO, Skill } from "assets/frontend/models/Skill";
+import { Skill } from "assets/frontend/models/Skill";
 import { ApiService } from "../../services/api.service";
 import { SkillFactory } from "./skill.factory";
 import { frontendState } from "../../services/fe-state.service";

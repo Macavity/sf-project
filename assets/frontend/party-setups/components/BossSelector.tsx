@@ -2,7 +2,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { bossQuery } from "assets/frontend/bosses/boss.query";
-import { bossService } from "assets/frontend/bosses/boss.service";
 import { loggerService } from "assets/frontend/services/logger.service";
 import React from "react";
 

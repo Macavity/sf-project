@@ -10,6 +10,7 @@
         "start": "node scripts/start.js",
         "start:local": "node scripts/start.js",
         "build:react": "node scripts/build.js",
+        "lint": "yarn run lint:js",
         "lint:js": "eslint -c ./.eslintrc.js --ext .js,.tsx,.ts assets/",
         "lint:js:fix": "eslint -c ./.eslintrc.js --ext .js,.tsx,.ts assets/ --fix",
         "test": "node scripts/test.js"
