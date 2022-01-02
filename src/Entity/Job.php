@@ -48,7 +48,6 @@ class Job
     public function __construct()
     {
         $this->jobRotations = new ArrayCollection();
-        $this->characters = new ArrayCollection();
     }
 
     public function __toString(): string

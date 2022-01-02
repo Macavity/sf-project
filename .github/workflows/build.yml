@@ -1,0 +1,70 @@
+name: Build
+
+on:
+    push:
+        branches: [develop]
+    pull_request:
+        branches: [main, develop]
+
+jobs:
+    lint-fe:
+        name: Lint JavaScript
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [16.x]
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v2
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Cache Node Modules
+              uses: actions/cache@v2
+              with:
+                  path: "**/node_modules"
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+            - name: Yarn install
+              run: yarn install
+
+            - name: Lint
+              run: |
+                  yarn run lint:js
+    lint-php:
+        name: Lint PHP
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup PHP 8.0
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.0
+
+            - name: Validate composer.json and composer.lock
+              run: composer validate
+
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v2
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-php-
+
+            - name: Install dependencies
+              if: steps.composer-cache.outputs.cache-hit != 'true'
+              run: composer install --prefer-dist --no-progress --no-suggest
+
+            - name: Run PHPUnit
+              run: composer run test
+
+            - name: Run PHPStan
+              run: composer run lint
