@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Paneon\PhpToTypeScript\Annotation\TypeScriptInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -33,10 +34,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $email;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
+//    #[ORM\Column(type: 'boolean')]
+//    private $isVerified = false;
+
+    public function __toString(): string
+    {
+        return $this->getUserIdentifier();
+    }
+
 
     public function getId(): ?int
     {
@@ -48,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -65,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**
@@ -135,12 +140,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isVerified(): bool
     {
-        return $this->isVerified;
+        return false;
+        // return $this->isVerified;
     }
 
     public function setIsVerified(bool $isVerified): self
     {
-        $this->isVerified = $isVerified;
+        // $this->isVerified = $isVerified;
 
         return $this;
     }

@@ -1,0 +1,9 @@
+php_to_type_script:
+  inputDirectory: src/
+  outputDirectory: assets/interfaces/
+  prefix: I
+
+  directories:
+    'vendor/baumarkt/fe-bl-sdk/src/Dto/':
+      output: 'fe-bl-sdk/'
+      requireAnnotation: false

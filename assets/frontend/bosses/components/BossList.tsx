@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ElementTag } from '../../elements/ElementTag';
 import { bossQuery } from '../boss.query';
 import { bossService } from '../boss.service';
-import { Boss } from '../../models/Boss';
 import {
     Card,
     CardContent,
@@ -22,7 +21,7 @@ interface Props {
 }
 
 interface State {
-    bosses: Boss[];
+    bosses: IBoss[];
     isLoading: boolean;
 }
 
@@ -63,6 +62,7 @@ export class BossList extends Component<Props, State> {
                                 <CircularProgress/>
                             </Container>
                         ) : (
+
                             <Table>
                                 <TableHead>
                                     <TableRow>

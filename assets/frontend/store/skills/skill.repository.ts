@@ -1,9 +1,9 @@
-import { ISkillDTO, Skill } from 'assets/frontend/models/Skill';
-import { ApiService } from '../../services/api.service';
-import { SkillFactory } from './skill.factory';
-import { frontendState } from '../../services/fe-state.service';
+import { Skill } from "assets/frontend/models/Skill";
+import { ApiService } from "../../services/api.service";
+import { SkillFactory } from "./skill.factory";
+import { frontendState } from "../../services/fe-state.service";
 
-export const NoSkill = new Skill(0, 0, 'None');
+export const NoSkill = new Skill(0, 0, "None");
 
 export class SkillRepository {
     static find(id: number): Promise<Skill> {
@@ -11,10 +11,11 @@ export class SkillRepository {
             return Promise.resolve(NoSkill);
         }
 
-        return ApiService.get<ISkillDTO>(`/skills/${id}.json`)
-            .then(skillData => {
+        return ApiService.get<ISkill>(`/skills/${id}.json`).then(
+            (skillData) => {
                 return SkillFactory.createFromDTO(skillData);
-            });
+            },
+        );
     }
 
     static findAll() {
@@ -47,9 +48,10 @@ export class SkillRepository {
             i++;
         }
 
-        return ApiService.get<ISkillDTO[]>('/skills.json?' + queryElements.join('&'))
-            .then(dtoArray => {
-                return SkillFactory.createArrayFromDTOs(dtoArray);
-            });
+        return ApiService.get<ISkill[]>(
+            "/skills.json?" + queryElements.join("&"),
+        ).then((dtoArray) => {
+            return SkillFactory.createArrayFromDTOs(dtoArray);
+        });
     }
 }

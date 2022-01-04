@@ -2,9 +2,9 @@ import { Component } from 'react';
 import { ElementTag } from 'assets/frontend/elements/ElementTag';
 import { ElementType } from 'assets/frontend/enums/ElementType';
 import { PartySetup } from 'assets/frontend/models/PartySetup';
-import { BossRepository } from '../../bosses/boss.repository';
-import { PartySetupFactory } from '../../party-setups/party-setup.factory';
-import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
+import { BossRepository } from 'assets/frontend/bosses/boss.repository';
+import { PartySetupFactory } from 'assets/frontend/party-setups/party-setup.factory';
+import { JobRotationTags } from 'assets/frontend/job-rotations/components/JobRotationTags';
 import { Link, TableCell, TableRow } from '@mui/material';
 
 type LocalProps = {

@@ -3,6 +3,7 @@ import { zoneStore, ZoneStore } from './zone.store';
 import { zoneQuery, ZoneQuery } from './zone.query';
 import { Zone } from '../models/Zone';
 import { ZoneRepository } from './zone.repository';
+import { loggerService } from '../services/logger.service';
 
 
 class ZoneService {
@@ -13,7 +14,7 @@ class ZoneService {
         this.zoneStore.setLoading(true);
         ZoneRepository.findAll()
             .then(zones => {
-                console.debug('Zones loaded', zones);
+                loggerService.debug('✅ Initialized all Zones.');
                 this.zoneStore.set(zones);
                 this.zoneStore.setLoading(false);
             });

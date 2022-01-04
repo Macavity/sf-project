@@ -19,9 +19,10 @@ import {
     TableHead,
     TableRow
 } from '@mui/material';
-import { skillService } from '../../store/skills/skill.service';
 import { AddSetupButton } from '../../elements/AddSetupButton';
-import { IWindow } from "../../globals";
+import { getCounterElement } from '../../factories/element.factory';
+
+declare let window: IWindow;
 
 type LocalProps = {
     zoneKey: number;
@@ -36,8 +37,6 @@ type LocalState = {
     isAdmin: boolean;
     onlyLast: boolean;
 }
-
-declare let window: IWindow;
 
 const sortByLevel = (a: Stage, b: Stage) => (a.level > b.level) ? 1 : -1;
 
@@ -55,7 +54,6 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
             onlyLast: true,
         };
 
-        skillService.initSkills();
         zoneService.fetchZone(this.props.zoneKey);
     }
 
@@ -177,8 +175,8 @@ export class ZoneDetail extends Component<LocalProps, LocalState> {
                                                       zoneId={stage.areaKey}
                                                       bossName={stage.boss.name}
                                                       bossId={stage.boss.id}
-                                                      primaryCounterElement={stage.boss.primaryCounter}
-                                                      secondaryCounterElement={stage.boss.secondaryCounter}
+                                                      primaryCounterElement={getCounterElement(stage.boss.primaryElement)}
+                                                      secondaryCounterElement={getCounterElement(stage.boss.secondaryElement)}
                                             />
                                         );
                                     })}

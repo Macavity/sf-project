@@ -1,10 +1,9 @@
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { Boss } from '../models/Boss';
 
-export interface BossState extends EntityState<Boss, number> {
+export interface BossState extends EntityState<IBoss, number> {
 }
 
-@StoreConfig({ name: 'boss', idKey: 'key' })
+@StoreConfig({ name: 'boss', idKey: 'id' })
 export class BossStore extends EntityStore<BossState> {
 }
 

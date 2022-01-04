@@ -7,8 +7,12 @@ use App\Repository\JobRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Paneon\PhpToTypeScript\Annotation as PTS;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @PTS\TypeScriptInterface
+ */
 #[ORM\Entity(repositoryClass: JobRepository::class)]
 #[ApiResource]
 class Job
@@ -16,6 +20,7 @@ class Job
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /** @PTS\Type("number") */
     private ?int $id;
 
     #[ORM\Column]
@@ -27,19 +32,22 @@ class Job
     public string $slug;
 
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: Skill::class)]
-    /** @var Skill[] */
+    /**
+     * @var Skill[]
+     * @PTS\Type("string[]")
+     */
     public iterable $skills;
 
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: JobRotation::class, orphanRemoval: true)]
-    private $jobRotations;
-
-    #[ORM\OneToMany(mappedBy: 'job', targetEntity: Character::class)]
-    private $characters;
+    /**
+     * @var JobRotation[]
+     * @PTS\Type("string[]")
+     */
+    private iterable $jobRotations;
 
     public function __construct()
     {
         $this->jobRotations = new ArrayCollection();
-        $this->characters = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -76,36 +84,6 @@ class Job
             // set the owning side to null (unless already changed)
             if ($jobRotation->getJob() === $this) {
                 $jobRotation->setJob(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Character[]
-     */
-    public function getCharacters(): Collection
-    {
-        return $this->characters;
-    }
-
-    public function addCharacter(Character $character): self
-    {
-        if (!$this->characters->contains($character)) {
-            $this->characters[] = $character;
-            $character->setJob($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacter(Character $character): self
-    {
-        if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
-            if ($character->getJob() === $this) {
-                $character->setJob(null);
             }
         }
 

@@ -2,43 +2,60 @@
 
 namespace App\ValueObject;
 
+use App\Entity\Job;
 use App\Entity\Skill;
 use App\Entity\User;
 use JetBrains\PhpStorm\Pure;
+use Paneon\PhpToTypeScript\Annotation\Exclude;
+use Paneon\PhpToTypeScript\Annotation\TypeScriptInterface;
 
+/**
+ * @TypeScriptInterface
+ */
 class AppState
 {
-    public array $skills;
-
     public ?string $userName;
 
     public ?string $userAvatar;
 
+    /**
+     * @Exclude
+     */
     protected ?User $user;
 
     /**
-     * @param NavEntry[] $navigation
-     * @param Skill[] $skills
+     * @var NavEntry[]
      */
+    public array $navigation = [];
+
+    /**
+     * @var Skill[]
+     */
+    public array $skills = [];
+
+    /**
+     * @var Job[]
+     */
+    public array $jobs = [];
+
     public function __construct(
-        public array $navigation,
-        array        $skills,
-        public bool  $isUser,
-        public bool  $isAdmin,
-        ?User        $user = null,
+        array         $navigation,
+        array         $skills,
+        array         $jobs,
+        public bool   $isUser,
+        public bool   $isAdmin,
+        ?User         $user = null,
+        public string $frontController = '',
     )
     {
-        $this->skills = [];
-
-        foreach ($skills as $skill) {
-            $this->skills[] = $skill->toArray();
-        }
-
         if ($user) {
             $this->user = $user;
             $this->userName = $user->getUserIdentifier();
             $this->userAvatar = $this->getUserAvatar();
         }
+        $this->navigation = $navigation;
+        $this->skills = $skills;
+        $this->jobs = $jobs;
     }
 
     #[Pure]

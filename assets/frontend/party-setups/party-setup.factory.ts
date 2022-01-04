@@ -1,7 +1,7 @@
-import { PartySetupDto } from './dto/party-setup.dto';
-import { PartySetup } from '../models/PartySetup';
-import { ZoneFactory } from '../zones/zone.factory';
-import { BossFactory } from '../bosses/boss.factory';
+import { PartySetupDto } from 'assets/frontend/party-setups/dto/party-setup.dto';
+import { PartySetup } from 'assets/frontend/models/PartySetup';
+import { ZoneFactory } from 'assets/frontend/zones/zone.factory';
+import { BossFactory } from 'assets/frontend/bosses/boss.factory';
 
 export class PartySetupFactory {
     static create(dto: PartySetupDto): PartySetup {
@@ -29,10 +29,6 @@ export class PartySetupFactory {
             dto.mageRotation,
             dto.warlockRotation,
         );
-    }
-
-    static extractId(resourceId: string): number {
-        return Number(resourceId.replace('/api/boss/', ''));
     }
 
     static createArray(dtos: PartySetupDto[]) {

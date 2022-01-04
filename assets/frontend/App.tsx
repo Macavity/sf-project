@@ -5,13 +5,13 @@ import { ZoneList } from './zones/components/ZoneList';
 import { ZoneDetail } from './zones/components/ZoneDetail';
 import { BossList } from './bosses/components/BossList';
 import { BossDetail } from './bosses/components/BossDetail';
-import { TeamList } from './teams/components/TeamList';
+import { CharacterList } from './teams/components/CharacterList';
 import { AddPartySetupForm } from './party-setups/components/AddPartySetupForm';
 import { createTheme, PaletteMode, ThemeProvider } from '@mui/material';
 import NavBar from './components/NavBar';
 import { ColorModeContext } from './components/ColorModeSwitcher';
 
-declare let window: Window;
+declare let window: IWindow;
 
 function ZoneKeyRoute() {
     const { zoneKey } = useParams<{ zoneKey: string }>();
@@ -23,13 +23,15 @@ function ZoneKeyRoute() {
 function BossDetailKeyRoute() {
     const { bossId } = useParams<{ bossId: string }>();
     return (
-        <p><BossDetail bossId={Number(bossId)}/></p>
+        <BossDetail bossId={Number(bossId)}/>
     );
 }
 
+const basename = window.frontendState.frontController ? '/' + window.frontendState.frontController : '';
+
 function AppRouter() {
     return (
-        <Router>
+        <Router basename={basename}>
             <NavBar/>
             <Switch>
                 <Route exact path="/">
@@ -44,8 +46,8 @@ function AppRouter() {
                 <Route path="/boss/:bossId">
                     <BossDetailKeyRoute/>
                 </Route>
-                <Route path="/my-teams">
-                    <TeamList/>
+                <Route path="/my-characters">
+                    <CharacterList/>
                 </Route>
                 <Route path="/add-setup">
                     <AddPartySetupForm/>

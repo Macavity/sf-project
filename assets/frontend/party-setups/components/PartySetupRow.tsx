@@ -11,14 +11,15 @@ import { BossRepository } from '../../bosses/boss.repository';
 import { JobRotationTags } from '../../job-rotations/components/JobRotationTags';
 import './party-setup-row.module.scss';
 import { Link, TableCell, TableRow } from '@mui/material';
+import { getCounterElement } from '../../factories/element.factory';
 
 type LocalProps = {
     stageLevel: number;
     zoneId: number;
     bossId: number;
     bossName: string;
-    primaryCounterElement: ElementType | null;
-    secondaryCounterElement: ElementType | null;
+    primaryElement: ElementType | null;
+    secondaryElement: ElementType | null;
 }
 
 type LocalState = {
@@ -82,10 +83,11 @@ export class PartySetupRow extends Component<LocalProps, LocalState> {
                 </TableCell>
                 <TableCell scope="row">{this.props.stageLevel}</TableCell>
                 <TableCell width="50">
-                    <ElementTag element={this.props.primaryCounterElement} key={this.props.stageLevel + '-element-1'}/>
+                    <ElementTag element={getCounterElement(this.props.primaryElement)}
+                                key={this.props.stageLevel + '-element-1'}/>
                 </TableCell>
                 <TableCell width="50">
-                    <ElementTag element={this.props.secondaryCounterElement}
+                    <ElementTag element={getCounterElement(this.props.secondaryElement)}
                                 key={this.props.stageLevel + '-element-2'}/>
                 </TableCell>
                 <TableCell colSpan={4}>

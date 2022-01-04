@@ -1,5 +1,4 @@
 import { AreaKey, AreaNames } from 'assets/frontend/enums/AreaKey';
-import { Boss } from 'assets/frontend/models/Boss';
 
 export class Stage {
     public name: string;
@@ -9,7 +8,7 @@ export class Stage {
         public areaKey: number,
         public level: number,
         public bossKey: number,
-        public boss: Boss,
+        public boss: IBoss,
     ) {
         this.name = AreaNames[areaKey];
     }

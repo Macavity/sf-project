@@ -10,8 +10,12 @@ use App\Repository\SkillRepository;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\ArrayShape;
+use Paneon\PhpToTypeScript\Annotation as PTS;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+/**
+ * @PTS\TypeScriptInterface
+ */
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: [
     'id' => SearchFilterInterface::STRATEGY_EXACT,
@@ -29,6 +33,7 @@ class Skill
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /** @PTS\Type("number") */
     private ?int $id;
 
     #[ORM\Column]
@@ -38,6 +43,7 @@ class Skill
     public string $shortName;
 
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'skills')]
+    /** @PTS\Type("string") */
     public Job $job;
 
     public function getId(): ?int
@@ -50,13 +56,19 @@ class Skill
         return $this->name . '(' . substr($this->job->name, 0, 1) . ')';
     }
 
-    #[ArrayShape(['id' => "int|null", 'name' => "string", 'shortName' => "string", 'job' => "int|null"])] public function toArray(): array
+    #[ArrayShape(['id' => "int|null", 'name' => "string", 'shortName' => "string", 'job' => "int|null"])]
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),
             'name' => $this->name,
             'shortName' => $this->shortName,
-            'job' => '/api/jobs/'.$this->job->getId(),
+            'job' => '/api/jobs/' . $this->job->getId(),
         ];
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
