@@ -52,8 +52,7 @@ class FrontendController extends AbstractController
             return $this->redirectToRoute('app_login');
         }*/
         $appState = $this->appStateService->getAppState();
-        dump($appState);
-
+        
         return $this->render('frontend/index.html.twig', [
             'state' => $appState,
         ]);
