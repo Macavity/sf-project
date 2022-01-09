@@ -14,8 +14,7 @@ use Exception;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartySetupRepository::class)]
-#[ApiResource(
-)]
+#[ApiResource()]
 #[ApiFilter(OrderFilter::class, properties: [
     'slug.name' => 'ASC',
 ])]
@@ -24,7 +23,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
     'boss' => 'exact',
     'zone' => 'exact',
 ])]
-
 class PartySetup
 {
     #[ORM\Id]
@@ -32,8 +30,8 @@ class PartySetup
     #[ORM\Column]
     private ?int $id;
 
-    #[ORM\Column]
-    public ?int $stageLevel;
+    #[ORM\Column(nullable: true)]
+    public ?int $stageLevel = null;
 
     #[ORM\ManyToOne(inversedBy: 'partySetups')]
     private ?Zone $zone = null;
@@ -99,7 +97,7 @@ class PartySetup
 
     public function getScore(): int
     {
-        if(!$this->zone){
+        if (!$this->zone) {
             return 0;
         }
 
@@ -157,5 +155,10 @@ class PartySetup
     public function getZone(): ?Zone
     {
         return $this->zone;
+    }
+
+    public function setZone(?Zone $zone): void
+    {
+        $this->zone = $zone;
     }
 }

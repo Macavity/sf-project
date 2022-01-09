@@ -21,8 +21,8 @@ class PartySetupCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield AssociationField::new('zone');
-        yield NumberField::new('stageLevel');
-        yield AssociationField::new('boss');
+        yield NumberField::new('stageLevel')->setRequired(false);
+        yield AssociationField::new('boss')->setRequired(true);
 
         if ($pageName === Crud::PAGE_INDEX) {
             yield BooleanField::new('gladiatorRotation', 'Gladiator');
