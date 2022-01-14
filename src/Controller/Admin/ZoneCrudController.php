@@ -28,6 +28,7 @@ class ZoneCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name'),
+            TextField::new('slug'),
             NumberField::new('position'),
             AssociationField::new('continent'),
             NumberField::new('scoreStart'),
