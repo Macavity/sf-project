@@ -1,12 +1,14 @@
 parameters:
-    env(SENTRY_BACKEND): null
+  env(SENTRY_BACKEND): null
 sentry:
-    dsn: '%env(SENTRY_BACKEND)%'
-    tracing:
-        enabled: true
-        dbal: # DB queries
-            enabled: true
-        cache:
-            enabled: true
-        twig: # templating engine
-            enabled: true
+  dsn: '%env(SENTRY_BACKEND)%'
+  options:
+    traces_sample_rate: 1.0
+  tracing:
+    enabled: true
+    dbal: # DB queries
+      enabled: true
+    cache:
+      enabled: true
+    twig: # templating engine
+      enabled: true
