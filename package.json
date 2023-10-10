@@ -85,7 +85,7 @@
         "ra-data-json-server": "3.18.3",
         "ra-data-nestjsx-crud": "1.1.5",
         "react": "17.0.2",
-        "react-admin": "3.19.1",
+        "react-admin": "3.19.12",
         "react-app-polyfill": "^2.0.0",
         "react-dev-utils": "^11.0.3",
         "react-dnd": "14.0.4",
